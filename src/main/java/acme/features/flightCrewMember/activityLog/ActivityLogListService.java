@@ -16,39 +16,45 @@ import acme.realms.flightCrewMembers.FlightCrewMember;
 public class ActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	@Autowired
-	private ActivityLogRepository ActivityLogRepository;
+	private ActivityLogRepository repository;
 
 
 	@Override
 	public void authorise() {
-		int masterId = super.getRequest().getData("masterId", int.class);
-		FlightAssignment assignment = this.ActivityLogRepository.findFlightAssignmentById(masterId);
-		boolean authorised = assignment != null && (assignment.getCrewMember().getId() == super.getRequest().getPrincipal().getActiveRealm().getId() || !assignment.getDraftMode());
+		boolean authorised = false;
+
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer faId = super.getRequest().getData("faId", Integer.class);
+			if (faId != null) {
+				int id = super.getRequest().getPrincipal().getActiveRealm().getId();
+				FlightCrewMember member = this.repository.findMemberById(id);
+				FlightAssignment assignment = this.repository.findAssignmentById(faId);
+				if (assignment != null)
+					authorised = assignment.getCrewMember() == member;
+			}
+		}
+
 		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override
 	public void load() {
-		int masterId = super.getRequest().getData("masterId", int.class);
-		Collection<ActivityLog> logs = this.ActivityLogRepository.findLogsByAssignmentId(masterId);
+
+		int assignment = super.getRequest().getData("assignment", int.class);
+		int member = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Collection<ActivityLog> logs = this.repository.findLogsByAssignmentId(assignment, member);
+
+		super.getResponse().addGlobal("assignment", assignment);
+
 		super.getBuffer().addData(logs);
 	}
 
 	@Override
 	public void unbind(final ActivityLog log) {
-		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel");
-		super.addPayload(data, log, "registrationMoment", "incidentType");
+		Dataset data = super.unbindObject(log, "incidentType", "description", "severityLevel");
+		data.put("assignment", log.getActivityLogAssignment().getId());
 		super.getResponse().addData(data);
 	}
 
-	@Override
-	public void unbind(final Collection<ActivityLog> logs) {
-		int masterId = super.getRequest().getData("masterId", int.class);
-		FlightAssignment assignment = this.ActivityLogRepository.findFlightAssignmentById(masterId);
-		boolean correctUser = super.getRequest().getPrincipal().getActiveRealm().getId() == assignment.getCrewMember().getId();
-		boolean showCreate = correctUser;
-
-		super.getResponse().addGlobal("masterId", masterId);
-		super.getResponse().addGlobal("showCreate", showCreate);
-	}
 }

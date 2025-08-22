@@ -1,61 +1,56 @@
 
 package acme.features.flightCrewMember.activityLog;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
+import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @GuiService
 public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	@Autowired
-	private ActivityLogRepository ActivityLogRepository;
+	private ActivityLogRepository repository;
 
 
 	@Override
 	public void authorise() {
-		int id = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.ActivityLogRepository.findActivityLogById(id);
 
-		boolean authorised = false;
-		if (log != null) {
-			var assignment = log.getActivityLogAssignment();
-			int currentUserId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			boolean isOwner = assignment.getCrewMember().getId() == currentUserId;
-			boolean isPublished = !assignment.getDraftMode();
-			authorised = isOwner || isPublished;
+		boolean exists = false;
+		boolean isOwner = false;
+
+		int id = super.getRequest().getPrincipal().getActiveRealm().getId();
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer log = super.getRequest().getData("id", Integer.class);
+			if (log != null) {
+				FlightCrewMember member = this.repository.findMemberById(id);
+				List<FlightAssignment> allFA = this.repository.findAllAssignments();
+				ActivityLog logSelected = this.repository.findActivityLogById(log);
+				exists = logSelected != null || allFA.contains(logSelected);
+				if (logSelected != null)
+					isOwner = logSelected.getActivityLogAssignment().getCrewMember() == member;
+			}
 		}
 
-		super.getResponse().setAuthorised(authorised);
+		super.getResponse().setAuthorised(isOwner);
 	}
 
 	@Override
 	public void load() {
-		int recordId = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.ActivityLogRepository.findActivityLogById(recordId);
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog log = this.repository.findActivityLogById(id);
 		super.getBuffer().addData(log);
 	}
 
 	@Override
 	public void unbind(final ActivityLog log) {
-		Dataset data;
-
-		var assignment = log.getActivityLogAssignment();
-
-		boolean correctUser = assignment.getCrewMember().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
-		boolean showButtons = log.getDraftMode() && correctUser;
-		boolean publishAvailable = correctUser && log.getDraftMode() && !assignment.getDraftMode();
-		data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
-
-		data.put("masterId", assignment.getId());
-		data.put("buttonsAvailable", showButtons);
-		data.put("publishAvailable", publishAvailable);
-		data.put("draftModeFlightAssignment", assignment.getDraftMode());
-
+		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode", "activityLogAssignment");
 		super.getResponse().addData(data);
 	}
 }

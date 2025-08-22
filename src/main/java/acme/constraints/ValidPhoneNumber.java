@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
 @Pattern(regexp = "^\\+?\\d{6,15}$")
 public @interface ValidPhoneNumber {
 
-	String message() default "";
+	String message() default "{acme.validation.phoneNumber.invalid}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

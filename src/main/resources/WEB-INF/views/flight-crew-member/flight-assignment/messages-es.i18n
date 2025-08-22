@@ -1,37 +1,39 @@
-# --- TÍTULOS ---
-flight-crew-member.flight-assignment.form.title = Detalles del vuelo 
-flight-crew-member.flight-assignment.list.title = Listado de vuelos 
+#Títulos
+flight-crew-member.flight-assignment.list.title = Vuelos asignados
+
 
 # --- ETIQUETAS DEL FORMULARIO ---
-flight-crew-member.flight-assignment.form.label.duty = Función
-flight-crew-member.flight-assignment.form.label.lastUpdate = Última actualización
-flight-crew-member.flight-assignment.form.label.assignmentStatus  = Estado
-flight-crew-member.flight-assignment.form.label.remarks = Observaciones
-flight-crew-member.flight-assignment.form.label.crewMember = Tripulante 
-flight-crew-member.flight-assignment.form.label.leg = Código del tramo
-flight-crew-member.flight-assignment.form.label.confirmation = Confirmación
 
 # --- BOTONES DEL FORMULARIO ---
-flight-crew-member.flight-assignment.form.button.activity-log = Ver registros de actividad
-flight-crew-member.flight-assignment.form.button.create = Crear
-flight-crew-member.flight-assignment.form.button.update = Actualizar
-flight-crew-member.flight-assignment.form.button.publish = Publicar
-flight-crew-member.flight-assignment.form.button.delete = Eliminar
 
-# --- ETIQUETAS DEL LISTADO ---
-flight-crew-member.flight-assignment.list.label.duty = Función
+#Etiquetas
+flight-crew-member.flight-assignment.list.label.duty = Duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
-flight-crew-member.flight-assignment.list.label.status = Estado
-flight-crew-member.flight-assignment.list.label.remarks = Observaciones
-flight-crew-member.flight-assignment.list.label.leg = Número de vuelo
+flight-crew-member.flight-assignment.list.label.assignmentStatus = Estado
+flight-crew-member.flight-assignment.list.label.remarks = Remarks
+flight-crew-member.flight-assignment.list.label.legs = Legs
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Miembros
 flight-crew-member.flight-assignment.list.label.draftMode = Borrador
 
-# --- BOTÓN DEL LISTADO ---
-flight-crew-member.flight-assignment.list.button.create = Crear
+#Botones
+flight-crew-member.flight-assignment.form.button.activityLogs = Activity Logs
+flight-crew-member.flight-assignment.form.label.confirmation = Confirmacion
+flight-crew-member.flight-assignment.form.button.update = Actualizar
+flight-crew-member.flight-assignment.form.button.publish = Publicar
+flight-crew-member.flight-assignment.form.button.delete = Borrar
+flight-crew-member.flight-assignment.form.button.create = Crear
 
-# --- VALIDACIONES ---
-acme.validation.flightAssignment.crewMember.available=Debes estar DISPONIBLE para poder ser asignado a un trayecto.
-acme.validation.flightAssignment.leg.overlap=No puedes estar asignado a trayectos que se solapen en el tiempo.
-acme.validation.flightAssignment.duty.pilot.taken=Este trayecto ya tiene un PILOTO asignado.
-acme.validation.flightAssignment.duty.copilot.taken=Este trayecto ya tiene un COPILOTO asignado.
+#Validaciones
+acme.validation.flightAssignment.NotNull = No puede ser nulo
+acme.validation.flightAssignment.Past = Debe ser pasado
+acme.validation.flightAssignment.remarks = Debe estar entre 0 y 255 palabras
 
+#Mensajes
+acme.validation.legNotPast.message = La leg debe ser pasada
+acme.validation.legNotCompleted.message = La leg debe estar completada
+acme.validation.legNotPublished.message = La leg debe estar publicada
+acme.validation.memberAvailableCreate.message = El crew member debe estar disponible
+acme.validation.legCompatible.message = La leg debe ser compatible con este crew member
+acme.validation.confirmation.message = Marca esta casilla
+acme.validation.pilotExceptionPassed.message = Hay un piloto asignado
+acme.validation.copilotExceptionPassed.message = Hay un copiloto asignado

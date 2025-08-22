@@ -4,9 +4,7 @@ package acme.entities.flightAssignment;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -17,7 +15,6 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.constraints.ValidFlightAssignment;
 import acme.entities.legs.Leg;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 import lombok.Getter;
@@ -26,11 +23,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-
-@Table(indexes = {
-	@Index(columnList = "leg_id, crew_member_id")
-})
-@ValidFlightAssignment
 public class FlightAssignment extends AbstractEntity {
 
 	// Serialisation identifier
@@ -39,38 +31,36 @@ public class FlightAssignment extends AbstractEntity {
 
 	// Attributes 
 
-	@Mandatory
-	@Valid
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
 	@Automapped
 	private Duty				duty;
 
-	@Mandatory
-	@ValidMoment(past = true)
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
+	@ValidMoment(past = true, min = "2000/01/01 00:00", max = "2100/01/01 00:00", message = "{acme.validation.flightAssignment.Past}")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				lastUpdate;
 
-	@Mandatory
-	@Valid
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
 	@Automapped
 	private AssignmentStatus	status;
 
 	@Optional
-	@ValidString(min = 0, max = 255)
+	@ValidString(min = 0, max = 255, message = "{acme.validation.flightAssignment.remarks}")
 	@Automapped
 	private String				remarks;
 
-	@Mandatory
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
 	@Automapped
-	private Boolean				draftMode;
+	private boolean				draftMode;
 
 	// RelationShips
 
-	@Mandatory
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
 	@Valid
 	@ManyToOne(optional = false)
 	private FlightCrewMember	crewMember;
 
-	@Mandatory
+	@Mandatory(message = "{acme.validation.flightAssignment.NotNull}")
 	@Valid
 	@ManyToOne(optional = false)
 	private Leg					leg;

@@ -1,29 +1,14 @@
 # Etiquetas y placeholders del formulario
-flight-crew-member.activity-log.list.title = Registro de actividad
-flight-crew-member.activity-log.form.title = Nuevo registro de actividad
-flight-crew-member.activity-log.form.label.registrationMoment = Momento de registro
-flight-crew-member.activity-log.form.label.incidentType = Tipo de incidente
-flight-crew-member.activity-log.form.placeholder.incidentType = Introduce el tipo de incidente
-flight-crew-member.activity-log.form.label.description = Descripción
-flight-crew-member.activity-log.form.placeholder.description = Describe el incidente
-flight-crew-member.activity-log.form.label.severityLevel  = Nivel de severidad
-flight-crew-member.activity-log.form.placeholder.severityLevel = Un número entre 0 y 10
 
 # Botones del formulario
-flight-crew-member.activity-log.list.button.create = Crear registro
-flight-crew-member.activity-log.form.button.create = Crear registro
-flight-crew-member.activity-log.form.button.update = Actualizar
-flight-crew-member.activity-log.form.button.delete = Eliminar
-flight-crew-member.activity-log.form.button.publish = Publicar
 
 # Columnas del listado y botón
-flight-crew-member.activity-log.list.label.registrationMoment=Momento de registro
-flight-crew-member.activity-log.list.label.incidentType=Tipo de incidente
-flight-crew-member.activity-log.list.label.description=Descripcion
-flight-crew-member.activity-log.list.label.severityLevel=Nivel de severidad
-
 
 # Mensajes de error
-activity-log.error.already-published = Este registro de actividad ya ha sido publicado.
-activity-log.error.cannot-delete-published = No se puede eliminar un registro de actividad ya publicado.
-activity-log.error.assignment-not-published = No se puede publicar el registro porque su asignación de vuelo no ha sido publicada.
+
+#Validaciones
+acme.validation.activityLog.NotNull = No puede ser nulo
+acme.validation.activityLog.Past = Debe ser pasada
+acme.validation.activityLog.incidentType = Deber estar entre 1 y 50 palabras
+acme.validation.activityLog.description = Debe estar entre 1 y 255 palabras
+acme.validation.activityLog.severityLevel = Debe ser un valor entre 0 y 10

@@ -1,30 +1,14 @@
 # FORM labels and placeholders
-flight-crew-member.activity-log.list.title = Activity Logs
-flight-crew-member.activity-log.form.title = New Activity Log
-flight-crew-member.activity-log.form.label.registrationMoment = Resgistration Moment
-flight-crew-member.activity-log.form.label.incidentType = Incident type
-flight-crew-member.activity-log.form.placeholder.incidentType = Enter the type of incident
-flight-crew-member.activity-log.form.label.description = Description
-flight-crew-member.activity-log.form.placeholder.description = Enter a description of the incident
-flight-crew-member.activity-log.form.label.severityLevel = Severity level
-flight-crew-member.activity-log.form.placeholder.severityLevel = A number between 0 and 10
 
 # FORM buttons
-flight-crew-member.activity-log.list.button.create = Create log
-flight-crew-member.activity-log.form.button.create = Create log
-flight-crew-member.activity-log.form.button.update = Update
-flight-crew-member.activity-log.form.button.delete = Delete
-flight-crew-member.activity-log.form.button.publish = Publish
 
 # LIST columns and button
-flight-crew-member.activity-log.list.label.registrationMoment=Registration moment
-flight-crew-member.activity-log.list.label.incidentType=Type of incident
-flight-crew-member.activity-log.list.label.description=Description
-flight-crew-member.activity-log.list.label.severityLevel=Severity level
-
-
 
 # ERROR messages
-activity-log.error.already-published = This activity log is already published.
-activity-log.error.cannot-delete-published = Cannot delete a published activity log.
-activity-log.error.assignment-not-published = Cannot publish the log because its flight assignment has not been published.
+
+#Validations
+acme.validation.activityLog.NotNull = Must not be null
+acme.validation.activityLog.Past = Must be past
+acme.validation.activityLog.incidentType = Must be between 1 and 50 words
+acme.validation.activityLog.description = Must be between 1 and 255 words
+acme.validation.activityLog.severityLevel= Must be a value between 0 and 10

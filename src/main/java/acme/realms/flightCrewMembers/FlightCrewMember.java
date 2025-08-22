@@ -3,6 +3,7 @@ package acme.realms.flightCrewMembers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidFlightCrewMember;
+import acme.constraints.ValidPhoneNumber;
 import acme.entities.airline.Airline;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,13 +34,12 @@ public class FlightCrewMember extends AbstractRole {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", message = "{acme.validation.flightCrewMember.employeeCode}")
+	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
 	@Column(unique = true)
 	private String					employeeCode;
 
 	@Mandatory
-	@ValidString(pattern = "^\\+?\\d{6,15}$", message = "{acme.validation.flightCrewMember.phoneNumber}")
-	@Automapped
+	@ValidPhoneNumber
 	private String					phoneNumber;
 
 	@Mandatory
@@ -47,8 +48,6 @@ public class FlightCrewMember extends AbstractRole {
 	private String					languageSkills;
 
 	@Mandatory
-	@Valid
-	@Automapped
 	private FlightCrewMemberStatus	flightCrewMemberStatus;
 
 	@Mandatory
@@ -58,12 +57,12 @@ public class FlightCrewMember extends AbstractRole {
 
 	@Optional
 	@ValidNumber(min = 0, max = 120)
-	@Automapped
 	private Integer					yearsOfExperience;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
+	@JoinColumn(name = "airline_id", nullable = false)
 	private Airline					airline;
 
 }

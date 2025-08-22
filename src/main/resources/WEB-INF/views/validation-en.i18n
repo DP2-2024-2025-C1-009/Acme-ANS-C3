@@ -85,7 +85,10 @@ acme.validation.manager.birth-date.message = Date of birth must be in the past
 
 acme.validation.confirmation.message = You need to confirm the changes
 
-acme.validation.flightCrewMember.employeeCode= Invalid format
+acme.validation.flightCrewMember.notNull= An agent can not be null
+acme.validation.flightCrewMember.notCorrect= The code is not correct
+acme.validation.phoneNumber.invalid = The phone number is invalid
+
 acme.validation.flightCrewMember.phoneNumber= Invalid format
 acme.validation.activityLog.registrationMoment.afterArrival=The registration moment must be after the scheduled arrival of the leg.
 acme.validation.flightCrewMember.nullornotpattern.message=The employee code must follow the required pattern and cannot be null or too short.
