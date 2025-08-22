@@ -1,5 +1,6 @@
 #Títulos
 flight-crew-member.flight-assignment.list.title = Vuelos asignados
+flight-crew-member.flight-assignment.form.title = Vuelo asignado
 
 
 # --- ETIQUETAS DEL FORMULARIO ---
@@ -9,10 +10,10 @@ flight-crew-member.flight-assignment.list.title = Vuelos asignados
 #Etiquetas
 flight-crew-member.flight-assignment.list.label.duty = Duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
-flight-crew-member.flight-assignment.list.label.assignmentStatus = Estado
-flight-crew-member.flight-assignment.list.label.remarks = Remarks
-flight-crew-member.flight-assignment.list.label.legs = Legs
-flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Miembros
+flight-crew-member.flight-assignment.list.label.status = Estado
+flight-crew-member.flight-assignment.list.label.remarks = Comentarios
+flight-crew-member.flight-assignment.list.label.legs = Tramo
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Miembro
 flight-crew-member.flight-assignment.list.label.draftMode = Borrador
 
 #Botones
@@ -26,7 +27,13 @@ flight-crew-member.flight-assignment.form.button.create = Crear
 #Validaciones
 acme.validation.flightAssignment.NotNull = No puede ser nulo
 acme.validation.flightAssignment.Past = Debe ser pasado
-acme.validation.flightAssignment.remarks = Debe estar entre 0 y 255 palabras
+acme.validation.flightAssignment.remarks = Debe estar entre 0 y 255 caracteres
+acme.validation.flightCrewMember.code.requiredOrTooShort=Código de empleado obligatorio y con al menos 2 letras iniciales.
+acme.validation.flightCrewMember.identity.required=La identidad del usuario es obligatoria.
+acme.validation.flightCrewMember.name.required=El nombre es obligatorio.
+acme.validation.flightCrewMember.surname.required=El apellido es obligatorio.
+acme.validation.flightCrewMember.initials.mismatch=Las iniciales del código no coinciden con nombre y apellidos.
+
 
 #Mensajes
 acme.validation.legNotPast.message = La leg debe ser pasada

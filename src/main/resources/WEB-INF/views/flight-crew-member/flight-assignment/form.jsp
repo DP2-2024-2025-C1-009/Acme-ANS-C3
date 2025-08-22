@@ -15,7 +15,7 @@
 	<jstl:if test="${acme:anyOf(_command, 'show|update|publish|delete')}">
 		<acme:input-select code="flight-crew-member.flight-assignment.list.label.duty" path="duty" choices="${dutyChoices}"/>
 		<acme:input-moment code="flight-crew-member.flight-assignment.list.label.lastUpdate" path="lastUpdate" readonly ="true"/>
-		<acme:input-select code="flight-crew-member.flight-assignment.list.label.assignmentStatus" path="status" choices="${statusChoices}"/>
+		<acme:input-select code="flight-crew-member.flight-assignment.list.label.status" path="status" choices="${statusChoices}"/>
 		<acme:input-textbox code="flight-crew-member.flight-assignment.list.label.remarks" path="remarks" placeholder="acme.flightAssignment.placeholder.remarks"/>
 		<acme:input-select code="flight-crew-member.flight-assignment.list.label.legs" path="leg" choices="${legChoices}"/>
 		<acme:input-textbox code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="name" readonly ="true"/>

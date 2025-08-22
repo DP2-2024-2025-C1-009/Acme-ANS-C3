@@ -1,5 +1,7 @@
 #Titles
 flight-crew-member.flight-assignment.list.title = Flight assignments
+flight-crew-member.flight-assignment.form.title = Flight assignment
+
 
 # --- FORM LABELS ---
 
@@ -8,10 +10,10 @@ flight-crew-member.flight-assignment.list.title = Flight assignments
 #Labels
 flight-crew-member.flight-assignment.list.label.duty = Duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Last Update
-flight-crew-member.flight-assignment.list.label.assignmentStatus = Status
+flight-crew-member.flight-assignment.list.label.status = Status
 flight-crew-member.flight-assignment.list.label.remarks = Remarks
-flight-crew-member.flight-assignment.list.label.legs = Legs
-flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Crew Members
+flight-crew-member.flight-assignment.list.label.legs = Leg
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Crew Member
 flight-crew-member.flight-assignment.list.label.draftMode = Draft Mode
 
 #Buttons
@@ -25,7 +27,12 @@ flight-crew-member.flight-assignment.form.button.create = Create
 #Validations
 acme.validation.flightAssignment.NotNull = Must not be null
 acme.validation.flightAssignment.Past = Must be past
-acme.validation.flightAssignment.remarks = Must be between 0 and 255 words
+acme.validation.flightAssignment.remarks = Must be between 0 and 255 characters
+acme.validation.flightCrewMember.code.requiredOrTooShort=Employee code is required and must start with at least two initials.
+acme.validation.flightCrewMember.identity.required=User identity is required.
+acme.validation.flightCrewMember.name.required=Name is required.
+acme.validation.flightCrewMember.surname.required=Surname is required.
+acme.validation.flightCrewMember.initials.mismatch=Code initials do not match first name and surname.
 
 #Messages
 acme.validation.legNotPast.message = Leg must be past

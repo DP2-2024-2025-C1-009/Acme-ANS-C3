@@ -24,22 +24,14 @@ public class CrewMemberFlightAssignmentShowService extends AbstractGuiService<Fl
 
 	@Override
 	public void authorise() {
-		boolean isOwner = false;
-		boolean exists = false;
+		boolean authorised = false;
 
-		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty()) {
-			Integer assignmentId = super.getRequest().getData("id", Integer.class);
-			if (assignmentId != null) {
-				FlightCrewMember member = this.repository.findMemberById(memberId);
-
-				FlightAssignment assignment = this.repository.findAssignmentById(assignmentId);
-				exists = assignment != null;
-				if (assignment != null)
-					isOwner = assignment.getCrewMember() == member;
-			}
+		Integer assignmentId = super.getRequest().getData("id", Integer.class);
+		if (assignmentId != null) {
+			int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+			FlightAssignment assignment = this.repository.findAssignmentById(assignmentId);
+			authorised = assignment != null && assignment.getCrewMember() != null && assignment.getCrewMember().getId() == memberId;
 		}
-		boolean authorised = isOwner && exists;
 		super.getResponse().setAuthorised(authorised);
 	}
 
@@ -62,8 +54,7 @@ public class CrewMemberFlightAssignmentShowService extends AbstractGuiService<Fl
 		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode");
 		data.put("dutyChoices", dutyChoices);
 		data.put("statusChoices", statusChoices);
-		data.put("legRelated", legChoices.getSelected().getKey());
-		data.put("leg", legChoices);
+		data.put("legChoices", legChoices);
 		data.put("crewMember", member);
 		data.put("name", member.getIdentity().getName() + " " + member.getIdentity().getSurname());
 		data.put("flightAssignment", assignment.getId());

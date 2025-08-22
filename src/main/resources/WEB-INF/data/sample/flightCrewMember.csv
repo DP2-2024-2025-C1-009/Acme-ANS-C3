@@ -2,5 +2,5 @@ key,key:user-account,key:airline,employeeCode,phoneNumber,languageSkills,flightC
 member-01,user-account-member-01,airline-01,CC123456,+34611222333,"English, Spanish, French, Italian, German",AVAILABLE,EUR 10.45,1
 member-02,user-account-member-02,airline-02,HH234567,6543210,"English, Spanish, French, Italian, German",AVAILABLE,EUR 0.01,119
 member-03,user-account-member-03,airline-01,JA789456,+123456789012345,"English, Spanish, French, Italian, German",AVAILABLE,EUR 0.00,120
-member-04,user-account-member-04,airline-01,LP963852,9876543210,"English, Spanish, French, Italian, German",ON_VACATION,EUR 999999.99,""
-member-05,user-account-member-05,airline-03,LL112239,+4987654321,"English, Spanish, French, Italian, German",AVAILABLE,EUR 1000000.00,0
+member-04,user-account-member-04,airline-01,LL963854,9876543210,"English, Spanish, French, Italian, German",ON_VACATION,EUR 999999.99,""
+member-05,user-account-member-05,airline-03,LL963853,+4987654321,"English, Spanish, French, Italian, German",AVAILABLE,EUR 1000000.00,0
