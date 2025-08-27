@@ -47,4 +47,7 @@ public interface CrewMemberFlightAssignmentRepository extends AbstractRepository
 	@Query("select f from FlightAssignment f where f.duty =  acme.entities.flightAssignment.Duty.CO_PILOT and f.leg.id = :idLeg and f.draftMode = false")
 	List<FlightAssignment> findCopilot(int idLeg);
 
+	@Query("select l from Leg l where l.draftMode = false and l.scheduledDeparture > :now and l.airline.id = :airlineId order by l.scheduledDeparture asc")
+	List<Leg> findSelectableLegsForMember(int memberId, int airlineId, Date now);
+
 }
