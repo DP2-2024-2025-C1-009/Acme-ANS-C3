@@ -22,7 +22,8 @@ public class CrewMemberFlightAssignmentListPlannedService extends AbstractGuiSer
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(FlightCrewMember.class);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -37,7 +38,12 @@ public class CrewMemberFlightAssignmentListPlannedService extends AbstractGuiSer
 
 	@Override
 	public void unbind(final FlightAssignment assignment) {
-		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode");
+		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "crewMember", "draftMode", "leg");
+		data.put("leg", assignment.getLeg().getFlightNumber());
+		data.put("legScheduledDeparture", assignment.getLeg().getScheduledDeparture());
+		data.put("legScheduledArrival", assignment.getLeg().getScheduledArrival());
+		data.put("crewMemberEmployeeCode", assignment.getCrewMember().getEmployeeCode());
+		super.addPayload(data, assignment, "duty", "lastUpdate", "status", "remarks", "crewMember", "draftMode", "leg");
 		super.getResponse().addData(data);
 	}
 }

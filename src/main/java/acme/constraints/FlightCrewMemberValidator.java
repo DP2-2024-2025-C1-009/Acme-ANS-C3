@@ -3,11 +3,17 @@ package acme.constraints;
 
 import javax.validation.ConstraintValidatorContext;
 
-import acme.client.components.principals.DefaultUserIdentity;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import acme.client.components.validation.AbstractValidator;
+import acme.features.flightCrewMember.flightAssignment.CrewMemberFlightAssignmentRepository;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrewMember, FlightCrewMember> {
+
+	@Autowired
+	private CrewMemberFlightAssignmentRepository repository;
+
 
 	@Override
 	protected void initialise(final ValidFlightCrewMember annotation) {
@@ -16,42 +22,41 @@ public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrew
 
 	@Override
 	public boolean isValid(final FlightCrewMember member, final ConstraintValidatorContext context) {
-		boolean valid = true;
+		assert context != null;
 
-		if (member == null)
-			return true;
-
-		String code = member.getEmployeeCode();
-		boolean codeOk = code != null && !code.isBlank() && code.length() >= 2;
-		super.state(context, codeOk, "employeeCode", "{acme.validation.flightCrewMember.code.requiredOrTooShort}");
-		valid &= codeOk;
-
-		DefaultUserIdentity identity = member.getIdentity();
-		boolean hasIdentity = identity != null;
-		super.state(context, hasIdentity, "userAccount", "{acme.validation.flightCrewMember.identity.required}");
-		valid &= hasIdentity;
-
-		String name = hasIdentity ? identity.getName() : null;
-		String surname = hasIdentity ? identity.getSurname() : null;
-
-		boolean nameOk = name != null && !name.isBlank();
-		boolean surnameOk = surname != null && !surname.isBlank();
-
-		super.state(context, nameOk, "userAccount.identity.name", "{acme.validation.flightCrewMember.name.required}");
-		super.state(context, surnameOk, "userAccount.identity.surname", "{acme.validation.flightCrewMember.surname.required}");
-		valid &= nameOk && surnameOk;
-
-		if (valid) {
-			char c0 = Character.toUpperCase(code.charAt(0));
-			char c1 = Character.toUpperCase(code.charAt(1));
-			char n0 = Character.toUpperCase(name.trim().charAt(0));
-			char s0 = Character.toUpperCase(surname.trim().charAt(0));
-
-			boolean initialsMatch = c0 == n0 && c1 == s0;
-			super.state(context, initialsMatch, "employeeCode", "{acme.validation.flightCrewMember.initials.mismatch}");
-			valid &= initialsMatch;
+		if (member == null || member.getUserAccount() == null || member.getEmployeeCode() == null) {
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+			return false;
 		}
 
-		return valid;
+		final String code = member.getEmployeeCode().trim().toUpperCase();
+
+		final String name = member.getUserAccount().getIdentity().getName().trim();
+		final String surname = member.getUserAccount().getIdentity().getSurname().trim().replaceAll("\\s+", " ");
+		final String[] surnameParts = surname.trim().split(" +");
+
+		final String initials2 = name.substring(0, 1).toUpperCase() + surnameParts[0].substring(0, 1).toUpperCase();
+		String initials3 = null;
+
+		if (surnameParts.length >= 2)
+			initials3 = initials2 + surnameParts[1].substring(0, 1).toUpperCase();
+
+		boolean codeStartsCorrectly;
+		if (surnameParts.length == 1)
+			codeStartsCorrectly = code.startsWith(initials2);
+		else
+			codeStartsCorrectly = code.startsWith(initials2) || code.startsWith(initials3);
+
+		final boolean matchesPattern = code.matches("^([A-Z]{2,3})(\\d{6})$");
+
+		final FlightCrewMember sameCode = this.repository.findMemberSameCode(code);
+		final boolean unique = sameCode == null || sameCode.equals(member);
+
+		super.state(context, codeStartsCorrectly, "employeeCode", "validation.CrewMember.codePattern");
+		super.state(context, matchesPattern, "employeeCode", "validation.CrewMember.codePattern");
+		super.state(context, unique, "employeeCode", "validation.CrewMember.codeNotUnique");
+
+		return !super.hasErrors(context);
 	}
+
 }

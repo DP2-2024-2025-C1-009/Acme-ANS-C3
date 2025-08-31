@@ -4,10 +4,10 @@ package acme.entities.activityLog;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -15,6 +15,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidActivityLog;
 import acme.entities.flightAssignment.FlightAssignment;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidActivityLog
 public class ActivityLog extends AbstractEntity {
 
 	// Serialisation identifier
@@ -30,34 +32,34 @@ public class ActivityLog extends AbstractEntity {
 
 	// Attributes
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
-	@ValidMoment(past = true, min = "2000/01/01 00:00", max = "2100/01/01 00:00", message = "{acme.validation.activityLog.Past}")
+	@Mandatory
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				registrationMoment;
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
-	@ValidString(min = 1, max = 50, message = "{acme.validation.activityLog.incidentType}")
+	@Mandatory
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				incidentType;
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
-	@ValidString(min = 1, max = 255, message = "{acme.validation.activityLog.description}")
+	@Mandatory
+	@ValidString(min = 1, max = 255)
 	@Automapped
 	private String				description;
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
+	@Mandatory
 	@ValidNumber(min = 0, max = 10, message = "{acme.validation.activityLog.severityLevel}")
 	@Automapped
 	private Integer				severityLevel;
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
+	@Mandatory
 	@Automapped
 	private boolean				draftMode;
 
 	// RelationShips
 
-	@Mandatory(message = "{acme.validation.activityLog.NotNull}")
+	@Mandatory
+	@Valid
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "flight_assignment_id", nullable = false)
 	private FlightAssignment	activityLogAssignment;
 }

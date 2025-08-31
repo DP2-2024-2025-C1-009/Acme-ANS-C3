@@ -2,13 +2,8 @@
 flight-crew-member.flight-assignment.list.title = Vuelos asignados
 flight-crew-member.flight-assignment.form.title = Vuelo asignado
 
-
-# --- ETIQUETAS DEL FORMULARIO ---
-
-# --- BOTONES DEL FORMULARIO ---
-
 #Etiquetas
-flight-crew-member.flight-assignment.list.label.duty = Duty
+flight-crew-member.flight-assignment.list.label.duty = Función
 flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
 flight-crew-member.flight-assignment.list.label.status = Estado
 flight-crew-member.flight-assignment.list.label.remarks = Comentarios
@@ -17,11 +12,12 @@ flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Mie
 flight-crew-member.flight-assignment.list.label.draftMode = Borrador
 
 #Botones
-flight-crew-member.flight-assignment.form.button.activityLogs = Activity Logs
+flight-crew-member.flight-assignment.form.button.activityLogs = Registros de actividad
 flight-crew-member.flight-assignment.form.label.confirmation = Confirmacion
 flight-crew-member.flight-assignment.form.button.update = Actualizar
 flight-crew-member.flight-assignment.form.button.publish = Publicar
 flight-crew-member.flight-assignment.form.button.delete = Borrar
+flight-crew-member.flight-assignment.list.button.create = Crear
 flight-crew-member.flight-assignment.form.button.create = Crear
 
 #Validaciones
@@ -36,7 +32,7 @@ acme.validation.flightCrewMember.initials.mismatch=Las iniciales del código no 
 
 
 #Mensajes
-acme.validation.legNotPast.message = La leg debe ser pasada
+acme.validation.legNotPast.message = La leg debe ser futura
 acme.validation.legNotCompleted.message = La leg debe estar completada
 acme.validation.legNotPublished.message = La leg debe estar publicada
 acme.validation.memberAvailableCreate.message = El crew member debe estar disponible

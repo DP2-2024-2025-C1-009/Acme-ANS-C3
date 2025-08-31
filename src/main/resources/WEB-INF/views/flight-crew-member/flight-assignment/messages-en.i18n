@@ -2,11 +2,6 @@
 flight-crew-member.flight-assignment.list.title = Flight assignments
 flight-crew-member.flight-assignment.form.title = Flight assignment
 
-
-# --- FORM LABELS ---
-
-# --- BUTTONS ---
-
 #Labels
 flight-crew-member.flight-assignment.list.label.duty = Duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Last Update
@@ -22,7 +17,9 @@ flight-crew-member.flight-assignment.form.label.confirmation = Confirmation
 flight-crew-member.flight-assignment.form.button.update = Update
 flight-crew-member.flight-assignment.form.button.publish = Publish
 flight-crew-member.flight-assignment.form.button.delete = Delete
+flight-crew-member.flight-assignment.list.button.create = Create
 flight-crew-member.flight-assignment.form.button.create = Create
+
 
 #Validations
 acme.validation.flightAssignment.NotNull = Must not be null
@@ -35,7 +32,7 @@ acme.validation.flightCrewMember.surname.required=Surname is required.
 acme.validation.flightCrewMember.initials.mismatch=Code initials do not match first name and surname.
 
 #Messages
-acme.validation.legNotPast.message = Leg must be past
+acme.validation.legNotPast.message = Leg must be in the future
 acme.validation.legNotCompleted.message = Leg must be completed
 acme.validation.legNotPublished.message = Leg must be published
 acme.validation.memberAvailableCreate.message = The crew member must be available

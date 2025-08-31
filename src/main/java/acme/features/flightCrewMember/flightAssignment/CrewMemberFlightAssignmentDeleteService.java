@@ -1,7 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssignment;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,14 +21,10 @@ public class CrewMemberFlightAssignmentDeleteService extends AbstractGuiService<
 
 	@Override
 	public void authorise() {
-		boolean authorised = false;
 
-		Integer id = super.getRequest().getData("id", Integer.class);
-		if (id != null) {
-			int principalId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			FlightAssignment fa = this.repository.findAssignmentById(id);
-			authorised = fa != null && fa.getCrewMember() != null && fa.getCrewMember().getId() == principalId && fa.isDraftMode();
-		}
+		int id = super.getRequest().getData("id", Integer.class);
+		FlightAssignment assignment = this.repository.findAssignmentById(id);
+		boolean authorised = assignment != null && assignment.getDraftMode() && super.getRequest().getPrincipal().hasRealm(assignment.getCrewMember());
 		super.getResponse().setAuthorised(authorised);
 	}
 
@@ -45,9 +41,8 @@ public class CrewMemberFlightAssignmentDeleteService extends AbstractGuiService<
 
 	@Override
 	public void perform(final FlightAssignment assignment) {
-		List<ActivityLog> logs = this.repository.findRelatedLogs(assignment.getId());
-		if (!logs.isEmpty())
-			this.repository.deleteAll(logs);
+		Collection<ActivityLog> logs = this.repository.findAllActivityLogs(assignment.getId());
+		this.repository.deleteAll(logs);
 		this.repository.delete(assignment);
 	}
 
