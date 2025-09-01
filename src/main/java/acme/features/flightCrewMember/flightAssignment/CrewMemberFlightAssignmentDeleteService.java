@@ -6,10 +6,15 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
+import acme.entities.flightAssignment.AssignmentStatus;
+import acme.entities.flightAssignment.Duty;
 import acme.entities.flightAssignment.FlightAssignment;
+import acme.entities.legs.Leg;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @GuiService
@@ -52,14 +57,42 @@ public class CrewMemberFlightAssignmentDeleteService extends AbstractGuiService<
 
 	@Override
 	public void unbind(final FlightAssignment assignment) {
-		FlightCrewMember member = this.repository.findMemberById(super.getRequest().getPrincipal().getActiveRealm().getId());
+		FlightCrewMember member = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
+		Collection<Leg> legs = this.repository.findAllLegsByAirlineId(member.getAirline().getId());
 
-		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode");
+		SelectChoices legChoices = new SelectChoices();
+		boolean hasAvailableLegs = false;
+		SelectChoices dutyChoices = SelectChoices.from(Duty.class, assignment.getDuty());
+		SelectChoices statusChoices = SelectChoices.from(AssignmentStatus.class, assignment.getStatus());
 
-		data.put("legLabel", assignment.getLeg() != null ? assignment.getLeg().getFlightNumber() : "-");
-		data.put("readonly", true);
-		data.put("crewMember", member);
-		data.put("name", member.getIdentity().getName() + " " + member.getIdentity().getSurname());
+		for (Leg leg : legs) {
+			boolean isFuture = leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment());
+			boolean isAssigned = this.repository.isAlreadyAssignedToLeg(member, leg);
+			boolean overlaps = this.repository.isOverlappingAssignment(member, leg.getScheduledDeparture(), leg.getScheduledArrival());
+			boolean currentLeg = leg.equals(assignment.getLeg());
+
+			if (isFuture && !isAssigned && !overlaps && !leg.isDraftMode() || currentLeg) {
+				String key = Integer.toString(leg.getId());
+				String label = leg.getFlightNumber() + " (" + leg.getFlight().getTag() + ")";
+				boolean selected = currentLeg;
+				legChoices.add(key, label, selected);
+				hasAvailableLegs = true;
+			}
+		}
+
+		if (!hasAvailableLegs)
+			legChoices.add("0", "acme.validation.flightAssignment.crewMember.noAvailableLegs", true);
+		else
+			legChoices.add("0", "----", assignment.getLeg() == null);
+
+		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode", "leg");
+		data.put("duty", dutyChoices.getSelected().getKey());
+		data.put("dutyChoices", dutyChoices);
+		data.put("statusChoices", statusChoices);
+		data.put("status", statusChoices.getSelected().getKey());
+		data.put("legChoices", legChoices);
+		data.put("leg", legChoices.getSelected().getKey());
+		data.put("crewMember", member.getIdentity().getFullName());
 
 		super.getResponse().addData(data);
 	}

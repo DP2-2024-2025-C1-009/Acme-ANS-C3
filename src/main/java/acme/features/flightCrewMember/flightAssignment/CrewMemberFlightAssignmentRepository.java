@@ -57,13 +57,13 @@ public interface CrewMemberFlightAssignmentRepository extends AbstractRepository
 	@Query("SELECT COUNT(f) FROM FlightAssignment f WHERE f.leg = :leg AND f.duty = :duty")
 	long countByLegAndDuty(Leg leg, Duty duty);
 
-	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember.id = :crewMemberId AND f.moment = :moment AND f.draftMode = false")
+	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember.id = :crewMemberId AND f.lastUpdate = :moment AND f.draftMode = false")
 	Boolean hasFlightCrewMemberLegAssociated(int crewMemberId, Date moment);
 
 	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.leg = :leg")
 	boolean isAlreadyAssignedToLeg(FlightCrewMember crewMember, Leg leg);
 
-	@Query("SELECT l FROM Leg lWHERE l.aircraft.airline.id = :airlineId AND l.draftMode = false")
+	@Query("SELECT l FROM Leg l WHERE l.aircraft.airline.id = :airlineId AND l.draftMode = false")
 	Collection<Leg> findPublishedLegsByAirlineId(int airlineId);
 
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false")
@@ -72,7 +72,7 @@ public interface CrewMemberFlightAssignmentRepository extends AbstractRepository
 	@Query("SELECT COUNT(f) FROM FlightAssignment f WHERE f.crewMember = :crewMember")
 	int countByCrewMember(FlightCrewMember crewMember);
 
-	@Query("SELECT a FROM ActivityLog a WHERE a.flightAssignment.id = :flightAssignmentId")
+	@Query("SELECT a FROM ActivityLog a WHERE a.activityLogAssignment.id = :flightAssignmentId")
 	Collection<ActivityLog> findAllActivityLogs(int flightAssignmentId);
 
 	@Query("select m from FlightCrewMember m where m.id = :memberId")

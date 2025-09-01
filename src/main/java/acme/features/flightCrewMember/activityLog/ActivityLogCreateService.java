@@ -45,7 +45,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 				exists = assignmentSelected != null || allFA.contains(assignmentSelected) && assignmentSelected != null;
 				if (exists) {
 					isOwner = assignmentSelected.getCrewMember() == member;
-					isPublished = !assignmentSelected.isDraftMode();
+					isPublished = !assignmentSelected.getDraftMode();
 				}
 			}
 		}
