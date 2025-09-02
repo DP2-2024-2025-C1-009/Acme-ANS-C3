@@ -14,9 +14,7 @@ import acme.entities.flightAssignment.AssignmentStatus;
 import acme.entities.flightAssignment.Duty;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.legs.Leg;
-import acme.entities.legs.LegStatus;
 import acme.realms.flightCrewMembers.FlightCrewMember;
-import acme.realms.flightCrewMembers.FlightCrewMemberStatus;
 
 @GuiService
 public class CrewMemberFlightAssignmentShowService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
@@ -50,8 +48,6 @@ public class CrewMemberFlightAssignmentShowService extends AbstractGuiService<Fl
 		boolean hasAvailableLegs = false;
 		SelectChoices dutyChoices = SelectChoices.from(Duty.class, assignment.getDuty());
 		SelectChoices statusChoices = SelectChoices.from(AssignmentStatus.class, assignment.getStatus());
-		SelectChoices availabilityChoices = SelectChoices.from(FlightCrewMemberStatus.class, assignment.getCrewMember().getFlightCrewMemberStatus());
-		SelectChoices legStatuses = SelectChoices.from(LegStatus.class, assignment.getLeg() != null ? assignment.getLeg().getStatus() : null);
 
 		for (Leg leg : legs) {
 			boolean isFuture = leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment());
@@ -74,47 +70,22 @@ public class CrewMemberFlightAssignmentShowService extends AbstractGuiService<Fl
 			legChoices.add("0", "----", assignment.getLeg() == null);
 
 		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode", "leg");
-		if (assignment.getCrewMember() != null) {
-			member = assignment.getCrewMember();
-			data.put("flightCrewMember.id", member.getId());
-			data.put("flightCrewMember.employeeCode", member.getEmployeeCode());
-			data.put("flightCrewMember.phoneNumber", member.getPhoneNumber());
-			data.put("flightCrewMember.languageSkills", member.getLanguageSkills());
-			data.put("flightCrewMember.availabilityStatus", member.getFlightCrewMemberStatus());
-			data.put("flightCrewMember.salary", member.getSalary());
-			data.put("flightCrewMember.yearsOfExperience", member.getYearsOfExperience());
-			data.put("flightCrewMember.airline", member.getAirline().getName());
-		}
 
-		if (assignment.getLeg() != null) {
-			Leg leg = assignment.getLeg();
-			data.put("leg.id", leg.getId());
-			data.put("leg.flightNumber", leg.getFlightNumber());
-			data.put("leg.status", leg.getStatus());
-			data.put("leg.scheduledDeparture", leg.getScheduledDeparture());
-			data.put("leg.scheduledArrival", leg.getScheduledArrival());
-			data.put("leg.departureAirport", leg.getDepartureAirport().getAirportName());
-			data.put("leg.arrivalAirport", leg.getArrivalAirport().getAirportName());
-			data.put("leg.aircraft", leg.getAircraft().getNumberRegistration());
-			data.put("leg.flight", leg.getFlight().getTag());
-		}
-
-		data.put("leg", assignment.getLeg() != null ? Integer.toString(assignment.getLeg().getId()) : "0");
 		data.put("crewMember", member.getIdentity().getFullName());
-		data.put("statusChoices", statusChoices);
-		data.put("status", statusChoices.getSelected().getKey());
+
+		data.put("dutyChoices", dutyChoices);
 		data.put("duty", dutyChoices.getSelected().getKey());
 
-		data.put("confirmation", false);
-		data.put("dutyChoices", dutyChoices);
-		data.put("availabilityChoices", availabilityChoices);
-		data.put("legStatuses", legStatuses);
-		data.put("legChoices", legChoices);
+		data.put("statusChoices", statusChoices);
+		data.put("status", statusChoices.getSelected().getKey());
 
-		boolean showActivityLogs = !assignment.getDraftMode() && assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment());
-		super.getResponse().addGlobal("canShowActivityLogs", showActivityLogs);
+		data.put("legChoices", legChoices);
+		data.put("leg", assignment.getLeg() != null ? String.valueOf(assignment.getLeg().getId()) : "0");
 
 		super.getResponse().addData(data);
+
+		boolean showActivityLogs = !assignment.getDraftMode() && assignment.getLeg() != null && assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment());
+		super.getResponse().addGlobal("canShowActivityLogs", showActivityLogs);
 	}
 
 }

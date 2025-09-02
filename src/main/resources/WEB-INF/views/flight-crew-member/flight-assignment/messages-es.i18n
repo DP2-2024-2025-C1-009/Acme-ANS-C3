@@ -1,42 +1,14 @@
 #Títulos
-flight-crew-member.flight-assignment.list.title = Vuelos asignados
-flight-crew-member.flight-assignment.form.title = Vuelo asignado
+
 
 #Etiquetas
-flight-crew-member.flight-assignment.list.label.duty = Función
-flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
-flight-crew-member.flight-assignment.list.label.status = Estado
-flight-crew-member.flight-assignment.list.label.remarks = Comentarios
-flight-crew-member.flight-assignment.list.label.legs = Tramo
-flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Miembro
-flight-crew-member.flight-assignment.list.label.draftMode = Borrador
+
 
 #Botones
-flight-crew-member.flight-assignment.form.button.activityLogs = Registros de actividad
-flight-crew-member.flight-assignment.form.label.confirmation = Confirmacion
-flight-crew-member.flight-assignment.form.button.update = Actualizar
-flight-crew-member.flight-assignment.form.button.publish = Publicar
-flight-crew-member.flight-assignment.form.button.delete = Borrar
-flight-crew-member.flight-assignment.list.button.create = Crear
-flight-crew-member.flight-assignment.form.button.create = Crear
+
 
 #Validaciones
-acme.validation.flightAssignment.NotNull = No puede ser nulo
-acme.validation.flightAssignment.Past = Debe ser pasado
-acme.validation.flightAssignment.remarks = Debe estar entre 0 y 255 caracteres
-acme.validation.flightCrewMember.code.requiredOrTooShort=Código de empleado obligatorio y con al menos 2 letras iniciales.
-acme.validation.flightCrewMember.identity.required=La identidad del usuario es obligatoria.
-acme.validation.flightCrewMember.name.required=El nombre es obligatorio.
-acme.validation.flightCrewMember.surname.required=El apellido es obligatorio.
-acme.validation.flightCrewMember.initials.mismatch=Las iniciales del código no coinciden con nombre y apellidos.
+
 
 
 #Mensajes
-acme.validation.legNotPast.message = La leg debe ser futura
-acme.validation.legNotCompleted.message = La leg debe estar completada
-acme.validation.legNotPublished.message = La leg debe estar publicada
-acme.validation.memberAvailableCreate.message = El crew member debe estar disponible
-acme.validation.legCompatible.message = La leg debe ser compatible con este crew member
-acme.validation.confirmation.message = Marca esta casilla
-acme.validation.pilotExceptionPassed.message = Hay un piloto asignado
-acme.validation.copilotExceptionPassed.message = Hay un copiloto asignado

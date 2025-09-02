@@ -140,28 +140,18 @@ public class CrewMemberFlightAssignmentPublishService extends AbstractGuiService
 		else
 			legChoices.add("0", "----", assignment.getLeg() == null);
 
-		Dataset data = super.unbindObject(assignment, "duty", "status", "moment", "remarks", "draftMode", "leg");
+		Dataset data = super.unbindObject(assignment, "duty", "status", "lastUpdate", "remarks", "draftMode", "leg");
 
-		data.put("duty", dutyChoices.getSelected().getKey());
-		data.put("dutyChoices", dutyChoices);
-		data.put("statusChoices", statusChoices);
-		data.put("status", statusChoices.getSelected().getKey());
-		data.put("legChoices", legChoices);
-		data.put("leg", legChoices.getSelected().getKey());
 		data.put("crewMember", member.getIdentity().getFullName());
 
-		if (assignment.getLeg() != null) {
-			Leg leg = assignment.getLeg();
-			data.put("leg.id", leg.getId());
-			data.put("leg.flightNumber", leg.getFlightNumber());
-			data.put("leg.status", leg.getStatus());
-			data.put("leg.scheduledDeparture", leg.getScheduledDeparture());
-			data.put("leg.scheduledArrival", leg.getScheduledArrival());
-			data.put("leg.departureAirport", leg.getDepartureAirport().getAirportName());
-			data.put("leg.arrivalAirport", leg.getArrivalAirport().getAirportName());
-			data.put("leg.aircraft", leg.getAircraft().getNumberRegistration());
-			data.put("leg.flight", leg.getFlight().getTag());
-		}
+		data.put("dutyChoices", dutyChoices);
+		data.put("duty", dutyChoices.getSelected().getKey());
+
+		data.put("statusChoices", statusChoices);
+		data.put("status", statusChoices.getSelected().getKey());
+
+		data.put("legChoices", legChoices);
+		data.put("leg", assignment.getLeg() != null ? String.valueOf(assignment.getLeg().getId()) : "0");
 
 		super.getResponse().addData(data);
 	}
