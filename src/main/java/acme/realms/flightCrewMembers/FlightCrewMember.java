@@ -3,7 +3,6 @@ package acme.realms.flightCrewMembers;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -34,12 +33,12 @@ public class FlightCrewMember extends AbstractRole {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
 	@Column(unique = true)
 	private String					employeeCode;
 
 	@Mandatory
 	@ValidPhoneNumber
+	@Automapped
 	private String					phoneNumber;
 
 	@Mandatory
@@ -48,21 +47,23 @@ public class FlightCrewMember extends AbstractRole {
 	private String					languageSkills;
 
 	@Mandatory
+	@Valid
+	@Automapped
 	private FlightCrewMemberStatus	flightCrewMemberStatus;
 
 	@Mandatory
-	@ValidMoney(min = 0, max = 1000000)
+	@ValidMoney
 	@Automapped
 	private Money					salary;
 
 	@Optional
-	@ValidNumber(min = 0, max = 120)
+	@ValidNumber(min = 0, max = 120, message = "{acme.validation.years-Of-Experience}")
+	@Automapped
 	private Integer					yearsOfExperience;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "airline_id", nullable = false)
 	private Airline					airline;
 
 }
