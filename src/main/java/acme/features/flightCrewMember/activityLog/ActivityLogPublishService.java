@@ -1,15 +1,16 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
+import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMembers.FlightCrewMember;
+import acme.realms.flightCrewMembers.FlightCrewMemberStatus;
 
 @GuiService
 public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
@@ -20,32 +21,19 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void authorise() {
+		boolean authorised = false;
 
-		boolean hasRegistrationMoment = true;
-		boolean isOwner = false;
-		boolean exists = false;
-		boolean isPublished = true;
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog log = this.repository.findActivityLogById(id);
+		if (log != null) {
+			boolean isOwner = super.getRequest().getPrincipal().hasRealm(log.getActivityLogAssignment().getCrewMember());
+			boolean isDraft = log.getDraftMode();
 
-		String method = super.getRequest().getMethod();
-
-		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			Integer alId = super.getRequest().getData("id", Integer.class);
-			if (alId != null) {
-				FlightCrewMember member = this.repository.findMemberById(memberId);
-				List<ActivityLog> allFA = this.repository.findAllActivityLog();
-				ActivityLog log = this.repository.findActivityLogById(alId);
-				exists = log != null || allFA.contains(log) && log != null;
-				hasRegistrationMoment = super.getRequest().hasData("registrationMoment");
-				if (exists) {
-					isOwner = log.getActivityLogAssignment().getCrewMember() == member;
-					if (method.equals("GET"))
-						isPublished = !log.isDraftMode();
-				}
-			}
+			authorised = isOwner && isDraft;
 		}
 
-		super.getResponse().setAuthorised(isOwner && isPublished && hasRegistrationMoment);
+		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override
@@ -62,10 +50,16 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void validate(final ActivityLog log) {
+		FlightAssignment assignment = log.getActivityLogAssignment();
 
-		boolean confirmation;
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		boolean isPublished = !assignment.getDraftMode();
+		super.state(isPublished, "*", "acme.validation.activityLog.flightAssignment-not-published");
+
+		boolean legStarted = assignment.getLeg().getScheduledDeparture().before(MomentHelper.getCurrentMoment());
+		super.state(legStarted, "*", "acme.validation.activityLog.leg.not-finished");
+
+		boolean isAvailable = assignment.getCrewMember().getFlightCrewMemberStatus().equals(FlightCrewMemberStatus.AVAILABLE);
+		super.state(isAvailable, "*", "acme.validation.flightAssignment.crewMember.available");
 
 	}
 
@@ -79,7 +73,8 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 	public void unbind(final ActivityLog log) {
 		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
 
-		data.put("assignmentId", log.getActivityLogAssignment().getId());
+		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
+			super.getResponse().addGlobal("showAction", true);
 
 		super.getResponse().addData(data);
 	}

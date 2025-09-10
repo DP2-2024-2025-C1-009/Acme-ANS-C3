@@ -54,7 +54,7 @@ public class ActivityLog extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
-	private boolean				draftMode;
+	private Boolean				draftMode;
 
 	// RelationShips
 

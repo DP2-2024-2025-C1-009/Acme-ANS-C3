@@ -128,7 +128,7 @@ public class CrewMemberFlightAssignmentPublishService extends AbstractGuiService
 
 			if (isFuture && !isAssigned && !overlaps && !leg.isDraftMode() || currentLeg) {
 				String key = Integer.toString(leg.getId());
-				String label = leg.getFlightNumber() + " (" + leg.getFlight().getTag() + ")";
+				String label = leg.getFlightNumber() ;
 				boolean selected = currentLeg;
 				legChoices.add(key, label, selected);
 				hasAvailableLegs = true;

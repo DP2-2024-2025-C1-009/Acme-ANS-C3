@@ -1,15 +1,13 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
-import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @GuiService
@@ -22,23 +20,12 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 	@Override
 	public void authorise() {
 
-		boolean exists = false;
-		boolean isOwner = false;
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog log = this.repository.findActivityLogById(id);
+		boolean authorised = log != null && super.getRequest().getPrincipal().hasRealm(log.getActivityLogAssignment().getCrewMember());
 
-		int id = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty()) {
-			Integer log = super.getRequest().getData("id", Integer.class);
-			if (log != null) {
-				FlightCrewMember member = this.repository.findMemberById(id);
-				List<FlightAssignment> allFA = this.repository.findAllAssignments();
-				ActivityLog logSelected = this.repository.findActivityLogById(log);
-				exists = logSelected != null || allFA.contains(logSelected);
-				if (logSelected != null)
-					isOwner = logSelected.getActivityLogAssignment().getCrewMember() == member;
-			}
-		}
+		super.getResponse().setAuthorised(authorised);
 
-		super.getResponse().setAuthorised(isOwner);
 	}
 
 	@Override
@@ -50,7 +37,14 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void unbind(final ActivityLog log) {
-		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode", "activityLogAssignment");
+		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
+		boolean draftMode = this.repository.findAssignmentById(log.getActivityLogAssignment().getId()).getDraftMode();
+
+		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
+			super.getResponse().addGlobal("showAction", true);
+
+		super.getResponse().addGlobal("draftMode", draftMode);
+
 		super.getResponse().addData(data);
 	}
 }

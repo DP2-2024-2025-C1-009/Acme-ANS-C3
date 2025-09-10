@@ -1,8 +1,6 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -10,46 +8,44 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
-import acme.entities.flightAssignment.AssignmentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
-import acme.entities.legs.LegStatus;
+import acme.features.flightCrewMember.flightAssignment.CrewMemberFlightAssignmentRepository;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @GuiService
 public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	@Autowired
-	private ActivityLogRepository repository;
+	private ActivityLogRepository			repository;
+
+	@Autowired
+	CrewMemberFlightAssignmentRepository	repositoryFCM;
 
 
 	@Override
 	public void authorise() {
+		boolean authorised = false;
 
-		boolean fakeUpdate = true;
-		boolean exists = false;
-		boolean isOwner = false;
-		boolean isPublished = false;
+		int id = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember member = this.repositoryFCM.findCrewMemberById(id);
+		if (member != null) {
+			Object assignmentData = super.getRequest().getData().get("assignmentId");
 
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			if (id != 0)
-				fakeUpdate = false;
-		}
-		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			Integer assignment = super.getRequest().getData("assignment", Integer.class);
-			if (assignment != null) {
-				FlightCrewMember member = this.repository.findMemberById(memberId);
-				List<FlightAssignment> allFA = this.repository.findAllAssignments();
-				FlightAssignment assignmentSelected = this.repository.findAssignmentById(assignment);
-				exists = assignmentSelected != null || allFA.contains(assignmentSelected) && assignmentSelected != null;
-				if (exists) {
-					isOwner = assignmentSelected.getCrewMember() == member;
-					isPublished = !assignmentSelected.getDraftMode();
+			if (assignmentData != null) {
+				int assignmentId = Integer.parseInt(assignmentData.toString());
+				FlightAssignment assignment = this.repositoryFCM.findAssignmentById(assignmentId);
+
+				if (assignment != null) {
+					boolean isOwner = assignment.getCrewMember().getId() == id;
+					boolean isPublished = !assignment.getDraftMode();
+					boolean legStarted = assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment());
+
+					authorised = isOwner && isPublished && legStarted;
 				}
 			}
 		}
-		super.getResponse().setAuthorised(fakeUpdate && isOwner && isPublished);
+		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override
@@ -67,29 +63,12 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void bind(final ActivityLog log) {
 		super.bindObject(log, "incidentType", "description", "severityLevel");
-		log.setRegistrationMoment(MomentHelper.getCurrentMoment());
 
 	}
 
 	@Override
 	public void validate(final ActivityLog log) {
-
-		boolean completed = false;
-		boolean notCancelled = true;
-
-		FlightAssignment assignment = this.repository.findAssignmentById(super.getRequest().getData("assignmentId", Integer.class));
-
-		if (assignment.getLeg().getStatus().equals(LegStatus.LANDED) || assignment.getLeg().getStatus().equals(LegStatus.CANCELLED))
-			completed = true;
-		super.state(completed, "*", "acme.validation.activityLogNotCompleted.message");
-
-		if (assignment.getStatus().equals(AssignmentStatus.CANCELLED) || assignment.getStatus().equals(AssignmentStatus.PENDING))
-			notCancelled = false;
-		super.state(notCancelled, "*", "acme.validation.activityLogNotCancelled.message");
-
-		boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
-
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		;
 	}
 
 	@Override
@@ -100,8 +79,14 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void unbind(final ActivityLog log) {
 		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
+		boolean draftMode = log.getActivityLogAssignment().getDraftMode();
 
-		data.put("assignmentId", log.getActivityLogAssignment().getId());
+		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
+			super.getResponse().addGlobal("show", true);
+
+		super.getResponse().addGlobal("draftMode", draftMode);
+
+		data.put("assignmentId", super.getRequest().getData("assignmentId", int.class));
 
 		super.getResponse().addData(data);
 	}

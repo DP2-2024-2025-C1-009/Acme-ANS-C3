@@ -22,8 +22,8 @@ public class CrewMemberFlightAssignmentListPlannedService extends AbstractGuiSer
 
 	@Override
 	public void authorise() {
-		boolean status = super.getRequest().getPrincipal().hasRealmOfType(FlightCrewMember.class);
-		super.getResponse().setAuthorised(status);
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(FlightCrewMember.class);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override

@@ -6,33 +6,30 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
 import acme.entities.flightAssignment.FlightAssignment;
+import acme.features.flightCrewMember.flightAssignment.CrewMemberFlightAssignmentRepository;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @GuiService
 public class ActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	@Autowired
-	private ActivityLogRepository repository;
+	private ActivityLogRepository			repository;
+
+	@Autowired
+	CrewMemberFlightAssignmentRepository	repositoryFCM;
 
 
 	@Override
 	public void authorise() {
-		boolean authorised = false;
+		int id = super.getRequest().getData("assignmentId", int.class);
+		FlightAssignment assignment = this.repositoryFCM.findAssignmentById(id);
 
-		if (!super.getRequest().getData().isEmpty()) {
-			Integer faId = super.getRequest().getData("faId", Integer.class);
-			if (faId != null) {
-				int id = super.getRequest().getPrincipal().getActiveRealm().getId();
-				FlightCrewMember member = this.repository.findMemberById(id);
-				FlightAssignment assignment = this.repository.findAssignmentById(faId);
-				if (assignment != null)
-					authorised = assignment.getCrewMember() == member;
-			}
-		}
+		boolean authorised = assignment != null && !assignment.getDraftMode() && super.getRequest().getPrincipal().hasRealm(assignment.getCrewMember()) && assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment());
 
 		super.getResponse().setAuthorised(authorised);
 
@@ -41,19 +38,23 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	@Override
 	public void load() {
 
-		int assignment = super.getRequest().getData("assignment", int.class);
-		int member = super.getRequest().getPrincipal().getActiveRealm().getId();
-		Collection<ActivityLog> logs = this.repository.findLogsByAssignmentId(assignment, member);
-
-		super.getResponse().addGlobal("assignment", assignment);
-
+		int id = super.getRequest().getData("id", int.class);
+		FlightAssignment assignment = this.repositoryFCM.findAssignmentById(id);
+		if (assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
+			super.getResponse().addGlobal("show", true);
+		Collection<ActivityLog> logs = this.repository.findLogsByAssignmentId(id);
 		super.getBuffer().addData(logs);
+
+		boolean draftModeAssignment = assignment.getDraftMode();
+		super.getResponse().addGlobal("draftModeFlightAssignment", draftModeAssignment);
+
+		super.getResponse().addGlobal("id", id);
+
 	}
 
 	@Override
 	public void unbind(final ActivityLog log) {
-		Dataset data = super.unbindObject(log, "incidentType", "description", "severityLevel");
-		data.put("assignment", log.getActivityLogAssignment().getId());
+		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
 		super.getResponse().addData(data);
 	}
 
