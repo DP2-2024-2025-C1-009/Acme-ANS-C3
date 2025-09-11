@@ -1,25 +1,26 @@
-#Titles
-flight-crew-member.activity-log.list.title = Activity Logs
-flight-crew-member.activity-log.form.title = Activity Log 
+#Titles 
 
-#Form Labels
-flight-crew-member.activity-log.form.label.incidentType = Incident Type
-flight-crew-member.activity-log.form.label.description = Description
-flight-crew-member.activity-log.form.label.severityLevel = Severity Level
-
-# FORM buttons
-
-#List labels
+#List Labels
 flight-crew-member.activity-log.list.label.registrationMoment = Registration Moment
 flight-crew-member.activity-log.list.label.incidentType = Incident Type
 flight-crew-member.activity-log.list.label.description = Description
 flight-crew-member.activity-log.list.label.severityLevel = Severity Level
 
-# ERROR messages
+#Form Labels
+flight-crew-member.activity-log.form.label.incidentType = Incident Type
+flight-crew-member.activity-log.form.label.description = Description
+flight-crew-member.activity-log.form.label.severityLevel =  Severity Level
+
+#Buttons
+flight-crew-member.activity-log.form.button.create = Create 	
+flight-crew-member.activity-log.form.button.update = Update
+flight-crew-member.activity-log.form.button.delete = Delete
+flight-crew-member.activity-log.form.button.publish = Publish
+flight-crew-member.activity-log.list.button.create = Create Activity Log
 
 #Validations
-acme.validation.activityLog.NotNull = Must not be null
-acme.validation.activityLog.Past = Must be past
-acme.validation.activityLog.incidentType = Must be between 1 and 50 words
-acme.validation.activityLog.description = Must be between 1 and 255 words
-acme.validation.activityLog.severityLevel= Must be a value between 0 and 10
+acme.validation.activityLog.severityLevel = The severity level must be between 0 and 10
+acme.validation.years-Of-Experience = Years of experience must be between 0 and 120
+acme.validation.activityLog.beforeLeg= The registration moment must be after the leg's scheduled departure
+acme.validation.activityLog.leg.not-started = The leg must have already started
+acme.validation.activityLog.flightAssignment-not-published = The flight assignment must be published

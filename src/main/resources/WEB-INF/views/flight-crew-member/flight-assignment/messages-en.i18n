@@ -20,11 +20,12 @@ flight-crew-member.flight-assignment.form.label.crewMember = Crew Member
 
 
 #Buttons
-flight-crew-member.flight-assignment.list.button.create = Create
+flight-crew-member.flight-assignment.list.button.create = Create flight Assignment
 flight-crew-member.flight-assignment.form.button.create = Create
 flight-crew-member.flight-assignment.form.button.update = Update
 flight-crew-member.flight-assignment.form.button.publish = Publish
 flight-crew-member.flight-assignment.form.button.delete = Delete
+flight-crew-member.flight-assignment.form.button.activity-log = Create Activity Log
 
 
 #Validations
@@ -36,6 +37,4 @@ acme.validation.flightAssignment.crewMember.overlaps = You cannot have overlappi
 acme.validation.flightAssignment.legIsNotPublished = The selected leg must be published
 acme.validation.flightAssignment.leg.moment = The leg cannot be in the past
 acme.validation.flightAssignment.crewMember.multipleLegs = You cannot have overlapping flight assignments
-
-
-
+acme.validation.flightAssignment.crewMember.available = The crew member must be available

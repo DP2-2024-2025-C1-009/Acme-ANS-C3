@@ -82,7 +82,7 @@ public class CrewMemberFlightAssignmentPublishService extends AbstractGuiService
 			super.state(!overlaps, "*", "acme.validation.flightAssignment.crewMember.multipleLegs");
 
 			boolean isLegDraft = assignment.getLeg().isDraftMode();
-			super.state(!isLegDraft, "leg", "acme.validation.flightAssignment.legNotPublished");
+			super.state(!isLegDraft, "leg", "acme.validation.flightAssignment.legIsNotPublished");
 		}
 
 		if (assignment.getCrewMember() != null) {
@@ -128,7 +128,7 @@ public class CrewMemberFlightAssignmentPublishService extends AbstractGuiService
 
 			if (isFuture && !isAssigned && !overlaps && !leg.isDraftMode() || currentLeg) {
 				String key = Integer.toString(leg.getId());
-				String label = leg.getFlightNumber() ;
+				String label = leg.getFlightNumber();
 				boolean selected = currentLeg;
 				legChoices.add(key, label, selected);
 				hasAvailableLegs = true;

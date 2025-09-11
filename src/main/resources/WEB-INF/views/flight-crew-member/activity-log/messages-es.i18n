@@ -1,14 +1,26 @@
-# Etiquetas y placeholders del formulario
+#Títulos 
 
-# Botones del formulario
+#Etiquetas de lista
+flight-crew-member.activity-log.list.label.registrationMoment = Momento de registro
+flight-crew-member.activity-log.list.label.incidentType = Tipo de incidente
+flight-crew-member.activity-log.list.label.description = Descripción
+flight-crew-member.activity-log.list.label.severityLevel = Nivel de severidad
 
-# Columnas del listado y botón
+#Etiquetas de formulario
+flight-crew-member.activity-log.form.label.incidentType = Tipo de incidente
+flight-crew-member.activity-log.form.label.description = Descripción
+flight-crew-member.activity-log.form.label.severityLevel = Nivel de severidad
 
-# Mensajes de error
+#Botones
+flight-crew-member.activity-log.form.button.create = Crear 	
+flight-crew-member.activity-log.form.button.update = Actualizar
+flight-crew-member.activity-log.form.button.delete = Borrar
+flight-crew-member.activity-log.form.button.publish = Publicar
+flight-crew-member.activity-log.list.button.create = Crear registro de actividad
 
 #Validaciones
-acme.validation.activityLog.NotNull = No puede ser nulo
-acme.validation.activityLog.Past = Debe ser pasada
-acme.validation.activityLog.incidentType = Deber estar entre 1 y 50 palabras
-acme.validation.activityLog.description = Debe estar entre 1 y 255 palabras
-acme.validation.activityLog.severityLevel = Debe ser un valor entre 0 y 10
+acme.validation.activityLog.severityLevel = El nivel de severidad debe estar entre 0 y 10
+acme.validation.years-Of-Experience =Los años de experiencia deben estar entre 0 y 120
+acme.validation.activityLog.beforeLeg= El momento de registro debe ser posterior a la salida programada del tramo
+acme.validation.activityLog.leg.not-started = El tramo debe haber comenzado
+acme.validation.activityLog.flightAssignment-not-published =  La asignación de vuelo debe estar publicada

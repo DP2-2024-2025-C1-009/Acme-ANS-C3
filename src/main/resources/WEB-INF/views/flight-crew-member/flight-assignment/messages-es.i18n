@@ -1,14 +1,44 @@
 #Títulos
+flight-crew-member.flight-assignment.list.title = Asignaciones de vuelo
+flight-crew-member.flight-assignment.form.title = Asignación de vuelo
 
+#Etiquetas de lista
+flight-crew-member.flight-assignment.list.label.duty = Función
+flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
+flight-crew-member.flight-assignment.list.label.status = Estado
+flight-crew-member.flight-assignment.list.label.remarks = Observaciones
+flight-crew-member.flight-assignment.list.label.leg = Tramo
+flight-crew-member.flight-assignment.list.label.draftMode = Modo borrador
 
-#Etiquetas
+#Etiquetas de formulario
+flight-crew-member.flight-assignment.form.label.duty = Función 
+flight-crew-member.flight-assignment.form.label.lastUpdate = Última actualización
+flight-crew-member.flight-assignment.form.label.status = Estado
+flight-crew-member.flight-assignment.form.label.remarks = Observaciones
+flight-crew-member.flight-assignment.form.label.leg = Tramo
+flight-crew-member.flight-assignment.form.label.crewMember = Tripulante
 
 
 #Botones
+flight-crew-member.flight-assignment.list.button.create = Crear asignación de vuelo
+flight-crew-member.flight-assignment.form.button.create = Crear
+flight-crew-member.flight-assignment.form.button.update = Actualizar
+flight-crew-member.flight-assignment.form.button.publish = Publicar
+flight-crew-member.flight-assignment.form.button.delete = Borrar
+flight-crew-member.flight-assignment.form.button.activity-log = Crear registro de actividad
 
 
 #Validaciones
+acme.validation.flightAssignment.crewMember.onlyOnePilot =Ya existe un piloto para este vuelo
+acme.validation.flightAssignment.crewMember.onlyOneCoPilot = Ya existe un copiloto  para este vuelo
+acme.validation.flightAssignment.crewMember.noAvailableLegs =  No hay tramos disponibles
+acme.validation.flightAssignment.dutyIsAssigned = Esta función ya está asignada
+acme.validation.flightAssignment.crewMember.overlaps = No puede haber asignaciones de vuelo solapadas
+acme.validation.flightAssignment.legIsNotPublished = El tramo seleccionado debe estar publicado
+acme.validation.flightAssignment.leg.moment = El tramo no puede estar en el pasado
+acme.validation.flightAssignment.crewMember.multipleLegs = No puede haber asignaciones de vuelo solapadas
+acme.validation.flightAssignment.crewMember.available = El tripulante debe estar disponible
 
 
 
-#Mensajes
+
