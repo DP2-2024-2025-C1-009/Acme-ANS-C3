@@ -26,7 +26,7 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void authorise() {
-		int id = super.getRequest().getData("assignmentId", int.class);
+		int id = super.getRequest().getData("id", int.class);
 		FlightAssignment assignment = this.repositoryFCM.findAssignmentById(id);
 
 		boolean authorised = assignment != null && !assignment.getDraftMode() && super.getRequest().getPrincipal().hasRealm(assignment.getCrewMember()) && assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment());
@@ -41,7 +41,7 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 		int id = super.getRequest().getData("id", int.class);
 		FlightAssignment assignment = this.repositoryFCM.findAssignmentById(id);
 		if (assignment.getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
-			super.getResponse().addGlobal("show", true);
+			super.getResponse().addGlobal("showAct", true);
 		Collection<ActivityLog> logs = this.repository.findLogsByAssignmentId(id);
 		super.getBuffer().addData(logs);
 

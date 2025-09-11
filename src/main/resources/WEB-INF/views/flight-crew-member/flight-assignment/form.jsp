@@ -14,15 +14,12 @@
 	
 	<jstl:choose>
 		<jstl:when test="${_command == 'show' && canShowActivityLogs}">
-			<acme:button code="flight-crew-member.flight-assignment.form.button.activity-log" action="/flight-crew-member/activity-log/list?assignmentId=${id}"/>					
+			<acme:button code="flight-crew-member.flight-assignment.form.button.activity-log" action="/flight-crew-member/activity-log/list?id=${id}"/>					
 		</jstl:when> 
 	</jstl:choose>
 	
 	<jstl:if test="${_command == 'show' && !canShowActivityLogs}">
 
-		<div>
-			<small><em><acme:print code="flight-crew-member.flight-assignment.form.message.publishToCreateLog"/></em></small>
-		</div>
 	</jstl:if>
 	
 	<jstl:choose>

@@ -66,7 +66,7 @@ public class ActivityLogDeleteService extends AbstractGuiService<FlightCrewMembe
 		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
 
 		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
-			super.getResponse().addGlobal("showAction", true);
+			super.getResponse().addGlobal("showAct", true);
 
 		super.getResponse().addData(data);
 	}

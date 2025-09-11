@@ -38,12 +38,12 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 	@Override
 	public void unbind(final ActivityLog log) {
 		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
-		boolean draftMode = this.repository.findAssignmentById(log.getActivityLogAssignment().getId()).getDraftMode();
+		boolean draftModeFlightAssignment = this.repository.findAssignmentById(log.getActivityLogAssignment().getId()).getDraftMode();
 
 		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
-			super.getResponse().addGlobal("showAction", true);
+			super.getResponse().addGlobal("showAct", true);
 
-		super.getResponse().addGlobal("draftMode", draftMode);
+		super.getResponse().addGlobal("draftModeFlightAssignment", draftModeFlightAssignment);
 
 		super.getResponse().addData(data);
 	}
