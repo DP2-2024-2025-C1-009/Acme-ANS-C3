@@ -29,13 +29,13 @@ public class FlightAssignmentValidator extends AbstractValidator<ValidFlightAssi
 		if (flightAssignment.getLeg() != null) {
 			if (flightAssignment.getDuty() != null) {
 				boolean isDutyAlreadyAssigned = this.repository.hasDutyAssignedExcludingSelf(flightAssignment.getLeg(), flightAssignment.getDuty(), flightAssignment.getId()) && flightAssignment.getDraftMode() == false;
-				super.state(context, !isDutyAlreadyAssigned, "duty", "acme.validation.flightAssignment.duty");
+				super.state(context, !isDutyAlreadyAssigned, "duty", "acme.validation.flightAssignment.dutyIsAssigned");
 			}
 			boolean overlaps = this.repository.isOverlappingAssignmentExcludingSelf(flightAssignment.getCrewMember(), flightAssignment.getLeg().getScheduledDeparture(), flightAssignment.getLeg().getScheduledArrival(), flightAssignment.getId())
 				&& flightAssignment.getDraftMode() == false;
-			super.state(context, !overlaps, "leg", "acme.validation.flightAssignment.crewMember.multipleLegs");
+			super.state(context, !overlaps, "leg", "acme.validation.flightAssignment.crewMember.overlaps");
 			boolean isLegDraft = flightAssignment.getLeg().isDraftMode();
-			super.state(context, !isLegDraft, "leg", "acme.validation.flightAssignment.legNotPublished");
+			super.state(context, !isLegDraft, "leg", "acme.validation.flightAssignment.legIsNotPublished");
 		}
 
 		return !super.hasErrors(context);

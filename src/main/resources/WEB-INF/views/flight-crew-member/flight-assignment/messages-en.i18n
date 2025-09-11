@@ -31,6 +31,11 @@ flight-crew-member.flight-assignment.form.button.delete = Delete
 acme.validation.flightAssignment.crewMember.onlyOnePilot = There is already a pilot for this flight
 acme.validation.flightAssignment.crewMember.onlyOneCoPilot = There is already a copilot for this flight
 acme.validation.flightAssignment.crewMember.noAvailableLegs = There are not available legs
+acme.validation.flightAssignment.dutyIsAssigned = This duty is already assigned
+acme.validation.flightAssignment.crewMember.overlaps = You cannot have overlapping flight assignments
+acme.validation.flightAssignment.legIsNotPublished = The selected leg must be published
+acme.validation.flightAssignment.leg.moment = The leg cannot be in the past
+acme.validation.flightAssignment.crewMember.multipleLegs = You cannot have overlapping flight assignments
 
-#Messages
+
 
