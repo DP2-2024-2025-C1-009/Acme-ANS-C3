@@ -27,13 +27,6 @@ public class CrewMemberFlightAssignmentCreateService extends AbstractGuiService<
 
 	@Override
 	public void authorise() {
-		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		FlightCrewMember member = this.repository.findMemberById(memberId);
-
-		if (member == null) {
-			super.getResponse().setAuthorised(false);
-			return;
-		}
 
 		if (super.getRequest().hasData("id")) {
 			Integer id = super.getRequest().getData("id", Integer.class, 0);

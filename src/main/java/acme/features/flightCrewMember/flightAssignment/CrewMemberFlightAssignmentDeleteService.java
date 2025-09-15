@@ -61,7 +61,6 @@ public class CrewMemberFlightAssignmentDeleteService extends AbstractGuiService<
 		Collection<Leg> legs = this.repository.findAllLegsByAirlineId(member.getAirline().getId());
 
 		SelectChoices legChoices = new SelectChoices();
-		boolean hasAvailableLegs = false;
 		SelectChoices dutyChoices = SelectChoices.from(Duty.class, assignment.getDuty());
 		SelectChoices statusChoices = SelectChoices.from(AssignmentStatus.class, assignment.getStatus());
 
@@ -76,14 +75,10 @@ public class CrewMemberFlightAssignmentDeleteService extends AbstractGuiService<
 				String label = leg.getFlightNumber();
 				boolean selected = currentLeg;
 				legChoices.add(key, label, selected);
-				hasAvailableLegs = true;
 			}
 		}
 
-		if (!hasAvailableLegs)
-			legChoices.add("0", "acme.validation.flightAssignment.crewMember.noAvailableLegs", true);
-		else
-			legChoices.add("0", "----", assignment.getLeg() == null);
+		legChoices.add("0", "----", assignment.getLeg() == null);
 
 		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode", "leg");
 		data.put("duty", dutyChoices.getSelected().getKey());

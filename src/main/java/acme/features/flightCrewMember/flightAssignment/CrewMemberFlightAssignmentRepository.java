@@ -36,7 +36,7 @@ public interface CrewMemberFlightAssignmentRepository extends AbstractRepository
 	Collection<Leg> findAllLegsByAirlineId(int airlineId);
 
 	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.leg.scheduledDeparture < :end AND f.leg.scheduledArrival > :start AND f.draftMode = false")
-	Boolean isOverlappingAssignment(FlightCrewMember crewMember, java.util.Date start, java.util.Date end);
+	boolean isOverlappingAssignment(FlightCrewMember crewMember, java.util.Date start, java.util.Date end);
 
 	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.id <> :currentId AND f.leg.scheduledDeparture < :end AND f.leg.scheduledArrival > :start AND f.draftMode = false")
 	boolean isOverlappingAssignmentExcludingSelf(FlightCrewMember crewMember, Date start, Date end, int currentId);
@@ -55,8 +55,5 @@ public interface CrewMemberFlightAssignmentRepository extends AbstractRepository
 
 	@Query("SELECT m FROM FlightCrewMember m WHERE m.employeeCode= :employeeCode")
 	FlightCrewMember findMemberSameCode(String employeeCode);
-
-	@Query("select m from FlightCrewMember m where m.id = :memberId")
-	FlightCrewMember findCrewMemberById(int memberId);
 
 }

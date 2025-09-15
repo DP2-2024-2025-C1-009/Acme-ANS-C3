@@ -27,7 +27,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 		boolean authorised = false;
 
 		int id = super.getRequest().getPrincipal().getActiveRealm().getId();
-		FlightCrewMember member = this.repositoryFCM.findCrewMemberById(id);
+		FlightCrewMember member = this.repositoryFCM.findMemberById(id);
 		if (member != null) {
 			Object assignmentData = super.getRequest().getData().get("assignmentId");
 
