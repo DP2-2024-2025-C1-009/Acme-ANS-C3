@@ -1,4 +1,6 @@
 #Titles 
+flight-crew-member.activity-log.list.title = Activity Logs
+flight-crew-member.activity-log.form.title = Activity Log
 
 #List Labels
 flight-crew-member.activity-log.list.label.registrationMoment = Registration Moment
@@ -24,3 +26,4 @@ acme.validation.years-Of-Experience = Years of experience must be between 0 and 
 acme.validation.activityLog.beforeLeg= The registration moment must be after the leg's scheduled departure
 acme.validation.activityLog.leg.not-started = The leg must have already started
 acme.validation.activityLog.flightAssignment-not-published = The flight assignment must be published
+

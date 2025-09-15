@@ -25,7 +25,7 @@ flight-crew-member.flight-assignment.form.button.create = Crear
 flight-crew-member.flight-assignment.form.button.update = Actualizar
 flight-crew-member.flight-assignment.form.button.publish = Publicar
 flight-crew-member.flight-assignment.form.button.delete = Borrar
-flight-crew-member.flight-assignment.form.button.activity-log = Crear registro de actividad
+flight-crew-member.flight-assignment.form.button.activity-log = Mostrar registros de actividad
 
 
 #Validaciones

@@ -101,7 +101,7 @@ acme.validation.flightAssignment.duty.pilot.taken=There is already a pilot assig
 acme.validation.flightAssignment.duty.copilot.taken=There is already a co-pilot assigned to this leg.
 acme.validation.flightAssignment.leg.published= This leg is not published.
 acme.validation.activityLog.assignment.must-be-published=The flight assignment must be published before publishing the activity log.
-
+acme.validation.activityLog.severityLevel = Must be between 0 and 10
 
 # Claim validation messages
 acme.validation.claim.isPublished.message = You cannot publish a claim that has not been completed
