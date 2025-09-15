@@ -3,44 +3,57 @@ package acme.features.flightCrewMember.flightAssignment;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.activityLog.ActivityLog;
+import acme.entities.flightAssignment.Duty;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.legs.Leg;
+import acme.realms.flightCrewMembers.FlightCrewMember;
 
 @Repository
 public interface CrewMemberFlightAssignmentRepository extends AbstractRepository {
 
-	@Query("SELECT f FROM FlightAssignment f WHERE f.id = :id")
-	FlightAssignment findById(int id);
+	@Query("select f from FlightAssignment f where f.crewMember.id = :crewId and f.leg.scheduledArrival < :now")
+	Collection<FlightAssignment> findCompletedAssignmentByMemberId(int crewId, Date now);
 
-	@Query("SELECT f FROM FlightAssignment f WHERE f.crewMember.id = :crewId AND f.leg.scheduledDeparture >= :reference")
-	Collection<FlightAssignment> findPlannedAssignments(int crewId, Date reference);
+	@Query("select f from FlightAssignment f where f.crewMember.id = :crewId and f.leg.scheduledArrival >= :now")
+	Collection<FlightAssignment> findPlannedAssignmentsByMemberId(int crewId, Date now);
 
-	@Query("SELECT f FROM FlightAssignment f WHERE f.crewMember.id = :crewId AND f.leg.scheduledArrival < :reference")
-	Collection<FlightAssignment> findCompletedAssignments(int crewId, Date reference);
-
-	@Query("SELECT log FROM ActivityLog log WHERE log.activityLogAssignment.id = :assignmentId")
-	Collection<ActivityLog> findRelatedLogs(int assignmentId);
-
-	@Query("select l from Leg l")
-	List<Leg> findAllLegs();
-
-	@Query("select l from Leg l WHERE l.scheduledArrival > :currentMoment AND l.draftMode = false")
-	List<Leg> findPlannedPublishedLegs(Date currentMoment);
+	@Query("select f from FlightAssignment f where f.id = :id")
+	FlightAssignment findAssignmentById(int id);
 
 	@Query("select l from Leg l where l.id = :legId")
 	Leg findLegById(int legId);
 
-	@Query("select f from FlightAssignment f where f.crewMember.id = :crewId")
-	List<FlightAssignment> findFlightAssignmentByCrewMemberId(int crewId);
+	@Query("select l from Leg l")
+	Collection<Leg> findAllLegs();
 
-	@Query("select f from FlightAssignment f where f.leg.id = :legId")
-	List<FlightAssignment> findFlightAssignmentByLegId(int legId);
+	@Query("SELECT l FROM Leg l WHERE l.aircraft.airline.id = :airlineId")
+	Collection<Leg> findAllLegsByAirlineId(int airlineId);
+
+	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.leg.scheduledDeparture < :end AND f.leg.scheduledArrival > :start AND f.draftMode = false")
+	boolean isOverlappingAssignment(FlightCrewMember crewMember, java.util.Date start, java.util.Date end);
+
+	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.id <> :currentId AND f.leg.scheduledDeparture < :end AND f.leg.scheduledArrival > :start AND f.draftMode = false")
+	boolean isOverlappingAssignmentExcludingSelf(FlightCrewMember crewMember, Date start, Date end, int currentId);
+
+	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.leg = :leg AND f.duty = :duty AND f.id <> :currentId AND f.draftMode = false")
+	boolean hasDutyAssignedExcludingSelf(Leg leg, Duty duty, int currentId);
+
+	@Query("SELECT COUNT(f) > 0 FROM FlightAssignment f WHERE f.crewMember = :crewMember AND f.leg = :leg")
+	boolean isAlreadyAssignedToLeg(FlightCrewMember crewMember, Leg leg);
+
+	@Query("SELECT a FROM ActivityLog a WHERE a.activityLogAssignment.id = :flightAssignmentId")
+	Collection<ActivityLog> findAllActivityLogs(int flightAssignmentId);
+
+	@Query("select m from FlightCrewMember m where m.id = :memberId")
+	FlightCrewMember findMemberById(int memberId);
+
+	@Query("SELECT m FROM FlightCrewMember m WHERE m.employeeCode= :employeeCode")
+	FlightCrewMember findMemberSameCode(String employeeCode);
 
 }

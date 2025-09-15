@@ -15,6 +15,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidFlightCrewMember;
+import acme.constraints.ValidPhoneNumber;
 import acme.entities.airline.Airline;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,12 +33,11 @@ public class FlightCrewMember extends AbstractRole {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", message = "{acme.validation.flightCrewMember.employeeCode}")
 	@Column(unique = true)
 	private String					employeeCode;
 
 	@Mandatory
-	@ValidString(pattern = "^\\+?\\d{6,15}$", message = "{acme.validation.flightCrewMember.phoneNumber}")
+	@ValidPhoneNumber
 	@Automapped
 	private String					phoneNumber;
 
@@ -52,12 +52,12 @@ public class FlightCrewMember extends AbstractRole {
 	private FlightCrewMemberStatus	flightCrewMemberStatus;
 
 	@Mandatory
-	@ValidMoney(min = 0, max = 1000000)
+	@ValidMoney
 	@Automapped
 	private Money					salary;
 
 	@Optional
-	@ValidNumber(min = 0, max = 120)
+	@ValidNumber(min = 0, max = 120, message = "{acme.validation.years-Of-Experience}")
 	@Automapped
 	private Integer					yearsOfExperience;
 

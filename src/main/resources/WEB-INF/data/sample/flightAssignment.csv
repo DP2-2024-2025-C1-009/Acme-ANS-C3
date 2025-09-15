@@ -3,7 +3,7 @@ key,duty,lastUpdate,status,remarks,key:crewMember,key:leg,draftMode
 flightAssignment-01,LEAD_ATTENDANT,2000/01/01 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-50,false
 #Duty,"","","","","",""
 flightAssignment-02,PILOT,2020/09/11 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-51,true
-flightAssignment-03,COPILOT,2020/09/11 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-52,true
+flightAssignment-03,LEAD_ATTENDANT,2020/09/11 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-52,true
 flightAssignment-04,CABIN_ATTENDANT,2020/09/11 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-53,true
 #lastUpdate,"","","","","","",""
 flightAssignment-05,LEAD_ATTENDANT,2000/01/01 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-54,false
@@ -12,7 +12,7 @@ flightAssignment-07,LEAD_ATTENDANT,2024/12/31 23:59,CONFIRMED,"Lorem ipsum dolor
 flightAssignment-08,LEAD_ATTENDANT,2025/01/01 00:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-57,true
 #Status,"","","","","",""
 flightAssignment-09,LEAD_ATTENDANT,2020/09/11 00:00,PENDING,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-58,true
-flightAssignment-010,LEAD_ATTENDANT,2020/09/11 00:00,CANCELLED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-59,true
+flightAssignment-010,LEAD_ATTENDANT,2020/09/11 00:00,CANCELLED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",member-01,leg-59,false
 #Remarks,"","","","","",""
 flightAssignment-11,LEAD_ATTENDANT,2020/09/11 00:00,CONFIRMED,"""""",member-02,leg-52,true
 flightAssignment-12,LEAD_ATTENDANT,2020/09/11 00:00,CONFIRMED,"",member-02,leg-53,true

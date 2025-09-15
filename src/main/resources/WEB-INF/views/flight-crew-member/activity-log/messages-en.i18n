@@ -1,30 +1,26 @@
-# FORM labels and placeholders
-flight-crew-member.activity-log.list.title = Activity Logs
-flight-crew-member.activity-log.form.title = New Activity Log
-flight-crew-member.activity-log.form.label.registrationMoment = Resgistration Moment
-flight-crew-member.activity-log.form.label.incidentType = Incident type
-flight-crew-member.activity-log.form.placeholder.incidentType = Enter the type of incident
-flight-crew-member.activity-log.form.label.description = Description
-flight-crew-member.activity-log.form.placeholder.description = Enter a description of the incident
-flight-crew-member.activity-log.form.label.severityLevel = Severity level
-flight-crew-member.activity-log.form.placeholder.severityLevel = A number between 0 and 10
+#Titles 
 
-# FORM buttons
-flight-crew-member.activity-log.list.button.create = Create log
-flight-crew-member.activity-log.form.button.create = Create log
+#List Labels
+flight-crew-member.activity-log.list.label.registrationMoment = Registration Moment
+flight-crew-member.activity-log.list.label.incidentType = Incident Type
+flight-crew-member.activity-log.list.label.description = Description
+flight-crew-member.activity-log.list.label.severityLevel = Severity Level
+
+#Form Labels
+flight-crew-member.activity-log.form.label.incidentType = Incident Type
+flight-crew-member.activity-log.form.label.description = Description
+flight-crew-member.activity-log.form.label.severityLevel =  Severity Level
+
+#Buttons
+flight-crew-member.activity-log.form.button.create = Create 	
 flight-crew-member.activity-log.form.button.update = Update
 flight-crew-member.activity-log.form.button.delete = Delete
 flight-crew-member.activity-log.form.button.publish = Publish
+flight-crew-member.activity-log.list.button.create = Create Activity Log
 
-# LIST columns and button
-flight-crew-member.activity-log.list.label.registrationMoment=Registration moment
-flight-crew-member.activity-log.list.label.incidentType=Type of incident
-flight-crew-member.activity-log.list.label.description=Description
-flight-crew-member.activity-log.list.label.severityLevel=Severity level
-
-
-
-# ERROR messages
-activity-log.error.already-published = This activity log is already published.
-activity-log.error.cannot-delete-published = Cannot delete a published activity log.
-activity-log.error.assignment-not-published = Cannot publish the log because its flight assignment has not been published.
+#Validations
+acme.validation.activityLog.severityLevel = The severity level must be between 0 and 10
+acme.validation.years-Of-Experience = Years of experience must be between 0 and 120
+acme.validation.activityLog.beforeLeg= The registration moment must be after the leg's scheduled departure
+acme.validation.activityLog.leg.not-started = The leg must have already started
+acme.validation.activityLog.flightAssignment-not-published = The flight assignment must be published

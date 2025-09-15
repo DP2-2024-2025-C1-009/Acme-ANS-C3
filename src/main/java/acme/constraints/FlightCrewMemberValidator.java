@@ -1,24 +1,18 @@
 
 package acme.constraints;
 
-import java.util.Optional;
-
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.principals.DefaultUserIdentity;
-import acme.client.components.principals.UserAccount;
 import acme.client.components.validation.AbstractValidator;
-import acme.client.components.validation.Validator;
-import acme.features.flightCrewMember.FlightCrewMemberRepository;
+import acme.features.flightCrewMember.flightAssignment.CrewMemberFlightAssignmentRepository;
 import acme.realms.flightCrewMembers.FlightCrewMember;
 
-@Validator
 public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrewMember, FlightCrewMember> {
 
 	@Autowired
-	private FlightCrewMemberRepository repository;
+	private CrewMemberFlightAssignmentRepository repository;
 
 
 	@Override
@@ -28,42 +22,41 @@ public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrew
 
 	@Override
 	public boolean isValid(final FlightCrewMember member, final ConstraintValidatorContext context) {
+		assert context != null;
 
-		String identifier = member.getEmployeeCode();
-
-		if (identifier == null)
-			return false;
-		if (identifier.length() < 2) {
-			super.state(context, false, "*", "{acme.validation.flightCrewMember.nullornotpattern.message}");
-			return false;
-		}
-		UserAccount userAccount = member.getUserAccount();
-		if (userAccount == null || userAccount.getIdentity() == null)
-			return false;
-		DefaultUserIdentity identity = member.getUserAccount().getIdentity();
-
-		if (identity.getName() == null || identity.getName().isBlank() || identity.getSurname() == null || identity.getSurname().isBlank())
-			return false;
-
-		String inicialNombre = String.valueOf(identity.getName().charAt(0)).toUpperCase();
-		String inicialApellido = String.valueOf(identity.getSurname().charAt(0)).toUpperCase();
-
-		String iniciales = inicialNombre + inicialApellido;
-
-		String employeeCodeInitials = identifier.substring(0, 2);
-
-		if (!iniciales.equals(employeeCodeInitials)) {
-			super.state(context, false, "*", "{acme.validation.flightCrewMember.initials.mismatch}");
+		if (member == null || member.getUserAccount() == null || member.getEmployeeCode() == null) {
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
 			return false;
 		}
 
-		Optional<FlightCrewMember> memberWithSameCode = this.repository.findOneMemberByEmployeeCode(identifier);
-		if (memberWithSameCode.isPresent() && memberWithSameCode.get().getId() != member.getId()) {
-			super.state(context, false, "*", "{acme.validation.flightCrewMember.employeeCode.not-unique}");
-			return false;
-		}
+		final String code = member.getEmployeeCode().trim().toUpperCase();
 
-		return true;
+		final String name = member.getUserAccount().getIdentity().getName().trim();
+		final String surname = member.getUserAccount().getIdentity().getSurname().trim().replaceAll("\\s+", " ");
+		final String[] surnameParts = surname.trim().split(" +");
+
+		final String initials2 = name.substring(0, 1).toUpperCase() + surnameParts[0].substring(0, 1).toUpperCase();
+		String initials3 = null;
+
+		if (surnameParts.length >= 2)
+			initials3 = initials2 + surnameParts[1].substring(0, 1).toUpperCase();
+
+		boolean codeStartsCorrectly;
+		if (surnameParts.length == 1)
+			codeStartsCorrectly = code.startsWith(initials2);
+		else
+			codeStartsCorrectly = code.startsWith(initials2) || code.startsWith(initials3);
+
+		final boolean matchesPattern = code.matches("^([A-Z]{2,3})(\\d{6})$");
+
+		final FlightCrewMember sameCode = this.repository.findMemberSameCode(code);
+		final boolean unique = sameCode == null || sameCode.equals(member);
+
+		super.state(context, codeStartsCorrectly, "employeeCode", "validation.CrewMember.codePattern");
+		super.state(context, matchesPattern, "employeeCode", "validation.CrewMember.codePattern");
+		super.state(context, unique, "employeeCode", "validation.CrewMember.codeNotUnique");
+
+		return !super.hasErrors(context);
 	}
 
 }

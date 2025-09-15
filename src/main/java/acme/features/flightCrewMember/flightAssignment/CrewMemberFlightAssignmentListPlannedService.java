@@ -2,6 +2,7 @@
 package acme.features.flightCrewMember.flightAssignment;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,26 +17,33 @@ import acme.realms.flightCrewMembers.FlightCrewMember;
 public class CrewMemberFlightAssignmentListPlannedService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	@Autowired
-	private CrewMemberFlightAssignmentRepository assignmentRepository;
+	private CrewMemberFlightAssignmentRepository repository;
 
 
 	@Override
 	public void authorise() {
-		boolean allowed = super.getRequest().getPrincipal().hasRealmOfType(FlightCrewMember.class);
-		super.getResponse().setAuthorised(allowed);
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(FlightCrewMember.class);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
 	public void load() {
-		FlightCrewMember crew = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
-		Collection<FlightAssignment> plannedAssignments = this.assignmentRepository.findPlannedAssignments(crew.getId(), MomentHelper.getCurrentMoment());
+		int crewId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Date now = MomentHelper.getCurrentMoment();
 
-		super.getBuffer().addData(plannedAssignments);
+		Collection<FlightAssignment> planned = this.repository.findPlannedAssignmentsByMemberId(crewId, now);
+
+		super.getBuffer().addData(planned);
 	}
 
 	@Override
 	public void unbind(final FlightAssignment assignment) {
-		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "draftMode", "leg");
+		Dataset data = super.unbindObject(assignment, "duty", "lastUpdate", "status", "remarks", "crewMember", "draftMode", "leg");
+		data.put("leg", assignment.getLeg().getFlightNumber());
+		data.put("legScheduledDeparture", assignment.getLeg().getScheduledDeparture());
+		data.put("legScheduledArrival", assignment.getLeg().getScheduledArrival());
+		data.put("crewMemberEmployeeCode", assignment.getCrewMember().getEmployeeCode());
+		super.addPayload(data, assignment, "duty", "lastUpdate", "status", "remarks", "crewMember", "draftMode", "leg");
 		super.getResponse().addData(data);
 	}
 }

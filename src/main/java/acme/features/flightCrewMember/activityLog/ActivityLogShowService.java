@@ -4,6 +4,7 @@ package acme.features.flightCrewMember.activityLog;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activityLog.ActivityLog;
@@ -13,48 +14,36 @@ import acme.realms.flightCrewMembers.FlightCrewMember;
 public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	@Autowired
-	private ActivityLogRepository ActivityLogRepository;
+	private ActivityLogRepository repository;
 
 
 	@Override
 	public void authorise() {
-		int id = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.ActivityLogRepository.findActivityLogById(id);
 
-		boolean authorised = false;
-		if (log != null) {
-			var assignment = log.getActivityLogAssignment();
-			int currentUserId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			boolean isOwner = assignment.getCrewMember().getId() == currentUserId;
-			boolean isPublished = !assignment.getDraftMode();
-			authorised = isOwner || isPublished;
-		}
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog log = this.repository.findActivityLogById(id);
+		boolean authorised = log != null && super.getRequest().getPrincipal().hasRealm(log.getActivityLogAssignment().getCrewMember());
 
 		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override
 	public void load() {
-		int recordId = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.ActivityLogRepository.findActivityLogById(recordId);
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog log = this.repository.findActivityLogById(id);
 		super.getBuffer().addData(log);
 	}
 
 	@Override
 	public void unbind(final ActivityLog log) {
-		Dataset data;
+		Dataset data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
+		boolean draftModeFlightAssignment = this.repository.findAssignmentById(log.getActivityLogAssignment().getId()).getDraftMode();
 
-		var assignment = log.getActivityLogAssignment();
+		if (log.getActivityLogAssignment().getLeg().getScheduledArrival().before(MomentHelper.getCurrentMoment()))
+			super.getResponse().addGlobal("showAct", true);
 
-		boolean correctUser = assignment.getCrewMember().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
-		boolean showButtons = log.getDraftMode() && correctUser;
-		boolean publishAvailable = correctUser && log.getDraftMode() && !assignment.getDraftMode();
-		data = super.unbindObject(log, "registrationMoment", "incidentType", "description", "severityLevel", "draftMode");
-
-		data.put("masterId", assignment.getId());
-		data.put("buttonsAvailable", showButtons);
-		data.put("publishAvailable", publishAvailable);
-		data.put("draftModeFlightAssignment", assignment.getDraftMode());
+		super.getResponse().addGlobal("draftModeFlightAssignment", draftModeFlightAssignment);
 
 		super.getResponse().addData(data);
 	}

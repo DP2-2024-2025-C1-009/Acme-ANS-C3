@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = FlightCrewMemberValidator.class)
 public @interface ValidFlightCrewMember {
 
-	String message() default "{acme.validation.text.message}";
+	String message() default "";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

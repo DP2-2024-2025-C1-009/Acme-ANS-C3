@@ -1,36 +1,40 @@
-# --- TITLES ---
-flight-crew-member.flight-assignment.form.title = Flight Assignment Details
-flight-crew-member.flight-assignment.list.title = Flight Assignments List
+#Titles 
+flight-crew-member.flight-assignment.list.title = Flight Assignments
+flight-crew-member.flight-assignment.form.title = Flight Assignment
 
-# --- FORM LABELS ---
-flight-crew-member.flight-assignment.form.label.duty = Duty
-flight-crew-member.flight-assignment.form.label.lastUpdate = Last update
-flight-crew-member.flight-assignment.form.label.assignmentStatus  = Status
-flight-crew-member.flight-assignment.form.label.remarks = Remarks
-flight-crew-member.flight-assignment.form.label.crewMember = Flight Crew Member
-flight-crew-member.flight-assignment.form.label.leg = Leg code
-flight-crew-member.flight-assignment.form.label.confirmation = Confirmation
-
-# --- BUTTONS ---
-flight-crew-member.flight-assignment.form.button.activity-log = Show activity logs
-flight-crew-member.flight-assignment.form.button.create = Create
-flight-crew-member.flight-assignment.form.button.update = Update
-flight-crew-member.flight-assignment.form.button.publish = Publish
-flight-crew-member.flight-assignment.form.button.delete = Delete
-
-# --- LIST LABELS ---
+#List Labels
 flight-crew-member.flight-assignment.list.label.duty = Duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Last update
 flight-crew-member.flight-assignment.list.label.status = Status
 flight-crew-member.flight-assignment.list.label.remarks = Remarks
-flight-crew-member.flight-assignment.list.label.leg = Flight Number
-flight-crew-member.flight-assignment.list.label.draftMode = Draft mode
+flight-crew-member.flight-assignment.list.label.leg = Leg
+flight-crew-member.flight-assignment.list.label.draftMode = Draft Mode
 
-# --- LIST BUTTON ---
-flight-crew-member.flight-assignment.list.button.create = Create
+#Form Labels
+flight-crew-member.flight-assignment.form.label.duty = Duty
+flight-crew-member.flight-assignment.form.label.lastUpdate = Last update
+flight-crew-member.flight-assignment.form.label.status = Status
+flight-crew-member.flight-assignment.form.label.remarks = Remarks
+flight-crew-member.flight-assignment.form.label.leg = Leg
+flight-crew-member.flight-assignment.form.label.crewMember = Crew Member
 
-# --- VALIDATIONS ---
-acme.validation.flightAssignment.crewMember.available=You must be AVAILABLE to be assigned to a leg.
-acme.validation.flightAssignment.leg.overlap=You cannot be assigned to overlapping flight legs.
-acme.validation.flightAssignment.duty.pilot.taken=This leg already has a PILOT assigned.
-acme.validation.flightAssignment.duty.copilot.taken=This leg already has a CO-PILOT assigned.
+
+#Buttons
+flight-crew-member.flight-assignment.list.button.create = Create flight Assignment
+flight-crew-member.flight-assignment.form.button.create = Create
+flight-crew-member.flight-assignment.form.button.update = Update
+flight-crew-member.flight-assignment.form.button.publish = Publish
+flight-crew-member.flight-assignment.form.button.delete = Delete
+flight-crew-member.flight-assignment.form.button.activity-log = Create Activity Log
+
+
+#Validations
+acme.validation.flightAssignment.crewMember.onlyOnePilot = There is already a pilot for this flight
+acme.validation.flightAssignment.crewMember.onlyOneCoPilot = There is already a copilot for this flight
+acme.validation.flightAssignment.crewMember.noAvailableLegs = There are not available legs
+acme.validation.flightAssignment.dutyIsAssigned = This duty is already assigned
+acme.validation.flightAssignment.crewMember.overlaps = You cannot have overlapping flight assignments
+acme.validation.flightAssignment.legIsNotPublished = The selected leg must be published
+acme.validation.flightAssignment.leg.moment = The leg cannot be in the past
+acme.validation.flightAssignment.crewMember.multipleLegs = You cannot have overlapping flight assignments
+acme.validation.flightAssignment.crewMember.available = The crew member must be available
