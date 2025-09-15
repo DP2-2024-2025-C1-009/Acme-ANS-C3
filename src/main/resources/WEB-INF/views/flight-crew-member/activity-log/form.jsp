@@ -12,12 +12,10 @@
 		<jstl:when test="${_command == 'create' && showAct && draftModeFlightAssignment == false}">
 			<acme:submit code="flight-crew-member.activity-log.form.button.create" action="/flight-crew-member/activity-log/create?assignmentId=${assignmentId}"/>
 		</jstl:when>
-		<jstl:when test="${acme:anyOf(_command, 'show|update') && showAct && draftMode == true}">
+		<jstl:when test="${acme:anyOf(_command, 'show|update|publish') && showAct && draftMode == true}">
 			<acme:submit code="flight-crew-member.activity-log.form.button.update" action="/flight-crew-member/activity-log/update"/>
 			<acme:submit code="flight-crew-member.activity-log.form.button.delete" action="/flight-crew-member/activity-log/delete"/>
+			<acme:submit code="flight-crew-member.activity-log.form.button.publish" action="/flight-crew-member/activity-log/publish"/>
 		</jstl:when>
 	</jstl:choose>
-		<jstl:if test="${acme:anyOf(_command, 'show|update') && showAct && draftMode == true }">
-			<acme:submit code="flight-crew-member.activity-log.form.button.publish" action="/flight-crew-member/activity-log/publish"/>
-		</jstl:if>
 </acme:form>
