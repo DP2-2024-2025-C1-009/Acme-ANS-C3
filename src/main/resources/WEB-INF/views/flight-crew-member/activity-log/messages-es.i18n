@@ -1,4 +1,6 @@
-#Títulos 
+#Títulos
+flight-crew-member.activity-log.list.title = Registros de actividad
+flight-crew-member.activity-log.form.title = Registro de actividad 
 
 #Etiquetas de lista
 flight-crew-member.activity-log.list.label.registrationMoment = Momento de registro

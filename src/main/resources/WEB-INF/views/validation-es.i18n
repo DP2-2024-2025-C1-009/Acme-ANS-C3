@@ -102,6 +102,7 @@ acme.validation.flightAssignment.duty.pilot.taken=Ya hay un piloto asignado a es
 acme.validation.flightAssignment.duty.copilot.taken=Ya hay un copiloto asignado a este tramo.
 acme.validation.flightAssignment.leg.published= Esta leg no está publicada.
 acme.validation.activityLog.assignment.must-be-published=El flight assignment debe de estar publicado para poder publicar el activity log
+acme.validation.activityLog.severityLevel = Debe estar entre 0 y 10
 
 # Mensajes de validación para Claim
 acme.validation.claim.isPublished.message = No se puede publicar una reclamación que no está completada
