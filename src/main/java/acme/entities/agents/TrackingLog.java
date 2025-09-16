@@ -47,7 +47,7 @@ public class TrackingLog extends AbstractEntity {
 	private Date				creationMoment;
 
 	@Mandatory
-	@ValidString(min = 1, max = 50, message = "{acme.validation.tracking-log.steps-length}")
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				steps;
 
@@ -62,7 +62,7 @@ public class TrackingLog extends AbstractEntity {
 	private ClaimStatus			status;
 
 	@Optional
-	@ValidString(min = 0, max = 255, message = "{acme.validation.tracking-log.resolution-length}")
+	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				resolution;
 

@@ -39,16 +39,16 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
-	@ValidMoment(past = true, message = "{acme.validation.claim.registration-moment-date}")
+	@ValidMoment(past = true)
 	private Date				registrationMoment;
 
 	@Mandatory
-	@ValidEmail(message = "{acme.validation.claim.passenger-email-correct}")
+	@ValidEmail
 	@Automapped
 	private String				passengerEmail;
 
 	@Mandatory
-	@ValidString(min = 1, max = 255, message = "{acme.validation.claim.description-length}")
+	@ValidString(min = 1, max = 255)
 	@Automapped
 	private String				description;
 
