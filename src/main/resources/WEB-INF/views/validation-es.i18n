@@ -89,6 +89,7 @@ acme.validation.confirmation.message = Necesitas confirmar los cambios
 acme.validation.flightCrewMember.notNull = Un agente no puede ser nulo
 acme.validation.flightCrewMember.notCorrect = El código es incorrecto
 acme.validation.phoneNumber.invalid= El número de teléfono es inválido
+validation.CrewMember.codePattern = El código no es correcto
 
 acme.validation.flightCrewMember.phoneNumber= Formato inválido
 acme.validation.activityLog.registrationMoment.afterArrival=El momento de registro debe ser posterior a la llegada programada del tramo.
