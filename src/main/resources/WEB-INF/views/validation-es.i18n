@@ -90,6 +90,8 @@ acme.validation.flightCrewMember.notNull = Un agente no puede ser nulo
 acme.validation.flightCrewMember.notCorrect = El código es incorrecto
 acme.validation.phoneNumber.invalid= El número de teléfono es inválido
 validation.CrewMember.codePattern = El código no es correcto
+acme.validation.iataCode = Código Iata incorrecto
+
 
 acme.validation.flightCrewMember.phoneNumber= Formato inválido
 acme.validation.activityLog.registrationMoment.afterArrival=El momento de registro debe ser posterior a la llegada programada del tramo.
@@ -104,6 +106,9 @@ acme.validation.flightAssignment.duty.copilot.taken=Ya hay un copiloto asignado 
 acme.validation.flightAssignment.leg.published= Esta leg no está publicada.
 acme.validation.activityLog.assignment.must-be-published=El flight assignment debe de estar publicado para poder publicar el activity log
 acme.validation.activityLog.severityLevel = Debe estar entre 0 y 10
+acme.validation.invalidPhoneNumber = Formato inválido
+acme.validation.airline.iataCode.unique = El código iata debe ser único
+
 
 # Mensajes de validación para Claim
 acme.validation.claim.isPublished.message = No se puede publicar una reclamación que no está completada

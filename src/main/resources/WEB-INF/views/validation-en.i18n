@@ -103,6 +103,9 @@ acme.validation.flightAssignment.leg.published= This leg is not published.
 acme.validation.activityLog.assignment.must-be-published=The flight assignment must be published before publishing the activity log.
 acme.validation.activityLog.severityLevel = Must be between 0 and 10
 validation.CrewMember.codePattern = Code Pattern is not correct
+acme.validation.iataCode = Iata Code is not correct
+acme.validation.invalidPhoneNumber = Invalid Format
+acme.validation.airline.iataCode.unique = Iata Code must be unique
 
 # Claim validation messages
 acme.validation.claim.isPublished.message = You cannot publish a claim that has not been completed
