@@ -8,11 +8,11 @@ service-05,MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM,http://lorem.com/p
 service-06,โลเร็ม,http://lorem.com/photo,15.0,AAAG-25,EUR 500000.00
 service-07,<script>alert('Hacked!');</script>,http://lorem.com/photo,15.0,AAAH-25,EUR 500000.00
 ## Variantes para el campo photoLink ##
-service-08,Standard Service,ftp://a,15.0,AAAI-25,EUR 500000.00
-service-09,Standard Service,ftp://a.b,15.0,AAAJ-25,EUR 500000.00
+service-08,Standard Service,http://a.hj,15.0,AAAI-25,EUR 500000.00
+service-09,Standard Service,http://a.b,15.0,AAAJ-25,EUR 500000.00
 service-10,Standard Service,"http://www.lorem-ipsum.org/dolor/sit/amet,/consectetur/adipiscing/elit,/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/",15.0,AAAK-25,EUR 500000.00
 service-11,Standard Service,"http://www.lorem-ipsum.org/dolor/sit/amet,/consectetur/adipiscing/elit,/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/*",15.0,AAAL-25,EUR 500000.00
-## Variantes para el campo averageDwellTime ##
+## Variantes para el campo averageDwellTime ##,"",""
 service-12,Standard Service,http://lorem.com/photo,1.00,AAAM-25,EUR 500000.00
 service-13,Standard Service,https://j9g7u6e4.delivery.rocketcdn.me/wp-content/uploads/2020/12/aero-vf.jpg,1.01,AAAN-25,EUR 500000.00
 service-14,Standard Service,https://j9g7u6e4.delivery.rocketcdn.me/wp-content/uploads/2020/12/aero-vf.jpg,99.99,HHHH-25,EUR 500000.00
