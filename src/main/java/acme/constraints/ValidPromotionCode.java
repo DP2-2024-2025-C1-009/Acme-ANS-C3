@@ -11,13 +11,12 @@ import javax.validation.Payload;
 
 @Constraint(validatedBy = PromotionCodeValidator.class)
 @Target({
-	ElementType.TYPE
+	ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPromotionCode {
 
 	String message() default "";
 	Class<?>[] groups() default {};
-
 	Class<? extends Payload>[] payload() default {};
 }

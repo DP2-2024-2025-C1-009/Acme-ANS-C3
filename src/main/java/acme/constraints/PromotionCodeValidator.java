@@ -1,48 +1,31 @@
 
 package acme.constraints;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Year;
 
 import javax.validation.ConstraintValidatorContext;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.client.helpers.MomentHelper;
-import acme.entities.service.Service;
 
 @Validator
-public class PromotionCodeValidator extends AbstractValidator<ValidPromotionCode, Service> {
+public class PromotionCodeValidator extends AbstractValidator<ValidPromotionCode, String> {
+
+	private static final String PATTERN = "^[A-Z]{4}-[0-9]{2}$";
+
 
 	@Override
-	protected void initialise(final ValidPromotionCode annotation) {
-		assert annotation != null;
-	}
-
-	@Override
-	public boolean isValid(final Service service, final ConstraintValidatorContext context) {
-		String promotionCode = service.getPromotionCode();
-		if (promotionCode == null || promotionCode.equals(""))
+	public boolean isValid(final String code, final ConstraintValidatorContext context) {
+		if (code == null || code.isBlank())
 			return true;
 
-		if (!promotionCode.matches("^[A-Z]{4}-[0-9]{2}$")) {
-			super.state(context, false, "*", "Pattern incorrect:" + promotionCode);
+		if (!code.matches(PromotionCodeValidator.PATTERN))
 			return false;
-		}
 
-		String promotionCodeYear = promotionCode.substring(promotionCode.length() - 2);
+		String promotionCodeYear = code.substring(code.length() - 2);
+		int currentYear = Year.now().getValue() % 100;
+		return promotionCodeYear.equals(String.format("%02d", currentYear));
 
-		Date moment = MomentHelper.getCurrentMoment();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(moment);
-		String actualCurrentYear = String.valueOf(calendar.get(Calendar.YEAR)).substring(2);
-
-		if (!promotionCodeYear.equals(actualCurrentYear)) {
-			super.state(context, false, "*", "Doesn't correspond to the actual year" + actualCurrentYear);
-			return false;
-		}
-
-		return true;
 	}
 
 }

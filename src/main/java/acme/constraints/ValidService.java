@@ -9,16 +9,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = NumberRegistrationValidator.class)
-@Target({
-	ElementType.TYPE
-})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidNumberRegistration {
+@Constraint(validatedBy = ServiceValidator.class)
 
-	String message() default "Register number must be unique";
+public @interface ValidService {
+
+	String message() default "";
 
 	Class<?>[] groups() default {};
-
 	Class<? extends Payload>[] payload() default {};
+
 }

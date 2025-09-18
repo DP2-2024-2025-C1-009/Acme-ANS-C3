@@ -35,17 +35,17 @@ public class Airline extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(min = 1, max = 50, message = "{acme.validation.airline.name-lenght}")
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				name;
 
 	@Mandatory
-	@ValidString(min = 1, max = 3, pattern = "^[A-Z]{3}$")
+	@ValidString(pattern = "^[A-Z]{3}$", message = "{acme.validation.iataCode}")
 	@Column(unique = true)
 	private String				iataCode;
 
 	@Mandatory
-	@ValidUrl(remote = false, message = "{acme.validation.airline.website-valid}")
+	@ValidUrl(remote = false)
 	@Automapped
 	private String				website;
 
@@ -56,11 +56,11 @@ public class Airline extends AbstractEntity {
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
-	@ValidMoment(past = true, message = "{acme.validation.airline.foundation-moment-past}")
+	@ValidMoment(past = true)
 	private Date				foundationMoment;
 
 	@Optional
-	@ValidEmail(message = "{acme.validation.airline.email-valid}")
+	@ValidEmail
 	@Automapped
 	private String				email;
 

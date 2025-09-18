@@ -14,13 +14,14 @@ import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import acme.constraints.ValidPromotionCode;
+import acme.constraints.ValidService;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@ValidPromotionCode
+@ValidService
 public class Service extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -30,21 +31,22 @@ public class Service extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(min = 1, max = 50, message = "{acme.validation.service.name-length}")
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				name;
 
 	@Mandatory
-	@ValidUrl(remote = false, message = "{acme.validation.service.photo-link-valid}")
+	@ValidUrl
 	@Automapped
 	private String				photoLink;
 
 	@Mandatory
-	@ValidNumber(min = 1, max = 100, integer = 3, fraction = 2)
+	@ValidNumber(min = 1, max = 100, integer = 3)
 	@Automapped
 	private double				averageDwellTime;
 
 	@Optional
+	@ValidPromotionCode
 	@Column(unique = true)
 	private String				promotionCode;
 

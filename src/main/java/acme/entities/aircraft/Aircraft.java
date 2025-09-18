@@ -12,7 +12,6 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.constraints.ValidNumberRegistration;
 import acme.entities.airline.Airline;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +19,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@ValidNumberRegistration
 public class Aircraft extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -45,9 +43,9 @@ public class Aircraft extends AbstractEntity {
 	private Integer				numberPassengers;
 
 	@Mandatory
-	@ValidNumber(min = 2000, max = 50000)
+	@ValidNumber(min = 2000.0, max = 50000.0)
 	@Automapped
-	private Integer				loadWeight;
+	private Double				loadWeight;
 
 	@Mandatory
 	@Valid
@@ -63,7 +61,7 @@ public class Aircraft extends AbstractEntity {
 
 	@Mandatory //
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Airline				airline;
 
 }
