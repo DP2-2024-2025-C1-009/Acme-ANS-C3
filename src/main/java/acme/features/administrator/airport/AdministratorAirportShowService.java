@@ -24,7 +24,18 @@ public class AdministratorAirportShowService extends AbstractGuiService<Administ
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean exists = false;
+		boolean isAuthorised = false;
+
+		Integer id = super.getRequest().getData("id", Integer.class);
+		if (id != null) {
+			Airport airport = this.repository.findAirportById(id);
+			exists = airport != null;
+			isAuthorised = airport != null && super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
+		}
+		boolean authorised = exists && isAuthorised;
+
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
@@ -44,7 +55,7 @@ public class AdministratorAirportShowService extends AbstractGuiService<Administ
 		Dataset dataset;
 
 		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
-		dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "country", "website", "email", "contactPhoneNumber");
+		dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "country", "website", "email", "contactPhoneNumber", "operationalScope");
 		dataset.put("operationalScope", choices);
 
 		super.getResponse().addData(dataset);

@@ -1,7 +1,7 @@
 
 package acme.features.administrator.airport;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,22 +24,21 @@ public class AdministratorAirportListService extends AbstractGuiService<Administ
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
 	public void load() {
-		List<Airport> airports;
-
-		airports = this.repository.findAllAirports();
+		Collection<Airport> airports = this.repository.findAllAirports();
 
 		super.getBuffer().addData(airports);
 	}
 
 	@Override
 	public void unbind(final Airport airport) {
-		Dataset dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "country", "website", "email", "contactPhoneNumber");
-		super.addPayload(dataset, airport, "operationalScope");
+		Dataset dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "operationalScope");
+		super.addPayload(dataset, airport, "country", "website", "email", "contactPhoneNumber");
 
 		super.getResponse().addData(dataset);
 	}
