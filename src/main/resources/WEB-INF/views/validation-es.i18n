@@ -84,7 +84,7 @@ acme.validation.manager.intitials.message = Las primeras dos o tres letras se de
 acme.validation.manager.duplicated-identifier.message = El identificador debe ser único
 acme.validation.manager.birth-date.message = La fecha de nacimiento debe estar en pasado
 
-acme.validation.confirmation.message = Necesitas confirmar los cambios
+acme.validation.confirmation.message = Necesita confirmar los cambios
 
 
 acme.validation.flightCrewMember.notNull = Un agente no puede ser nulo

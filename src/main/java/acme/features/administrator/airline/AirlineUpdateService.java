@@ -1,8 +1,6 @@
 
 package acme.features.administrator.airline;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -22,9 +20,11 @@ public class AirlineUpdateService extends AbstractGuiService<Administrator, Airl
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		Integer id = super.getRequest().getData("id", Integer.class);
+		Airline airline = this.airlineRepository.findAirlineById(id);
+		boolean authorised = airline != null && super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
+		super.getResponse().setAuthorised(authorised);
 	}
-
 	@Override
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
@@ -39,18 +39,9 @@ public class AirlineUpdateService extends AbstractGuiService<Administrator, Airl
 
 	@Override
 	public void validate(final Airline airline) {
-		String cod = airline.getIataCode();
-		Collection<Airline> codigos = this.airlineRepository.findAllAirlineCode(cod).stream().filter(x -> x.getId() != airline.getId()).toList();
-
-		if (!codigos.isEmpty())
-			super.state(false, "codigo", "customers.booking.error.repeat-code");
-		{
-			boolean confirmation;
-
-			confirmation = super.getRequest().getData("confirmation", boolean.class);
-			super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-		}
-
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
