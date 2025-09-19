@@ -2,13 +2,13 @@ administrator.airport.label.name = Airport Name:
 administrator.airport.label.iata = IATA code:
 administrator.airport.label.scope = Operational Scope:
 administrator.airport.label.city = City:
-administrator.airport.label.country = Country:
-administrator.airport.label.website = Website:
-administrator.airport.label.email = Email:
-administrator.airport.label.contactPhoneNumber = Contact Phone Number:
-
+administrator.airport.label.operationalScope = Operational Scope:
+administrator.airport.label.country = Country
+administrator.airport.label.website = Website
 administrator.airport.button.create = Create
 administrator.airport.button.update = Update
+administrator.airport.label.email = Email
+administrator.airport.label.contactPhoneNumber = Phone Number
 
 administrator.airport.form.label.confirmation = Confirm changes
 
