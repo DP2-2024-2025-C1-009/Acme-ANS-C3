@@ -13,6 +13,7 @@ acme.validation.service.photo-link-valid = Introduce una URL válida
 acme.validation.service.promotion-code-year = Los dos últimos dígitos se deben corresponder con el año actual.
 acme.validation.service.promotion-code-pattern = El código promocional debe estar compuesto por 4 letras mayúsculas, un guión y dos dígitos, estos últimos correspondientes con el año actual.
 acme.validation.service.duplicated-promotionCode = Código promocional inválido
+acme.validation.numberRegistration = Número de registro inválido
 
 acme.validation.airport.airport-name-length = La logitud del nombre del aeropuerto no debe superar los 50 caracteres
 acme.validation.airport.iata-code-pattern = El código IATA debe contener únicamente tres letras mayúsculas

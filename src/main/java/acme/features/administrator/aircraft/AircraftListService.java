@@ -20,7 +20,8 @@ public class AircraftListService extends AbstractGuiService<Administrator, Aircr
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
@@ -31,8 +32,7 @@ public class AircraftListService extends AbstractGuiService<Administrator, Aircr
 
 	@Override
 	public void unbind(final Aircraft aircraft) {
-		Dataset data = super.unbindObject(aircraft, "model", "numberRegistration", "numberPassengers", "loadWeight", "isActive", "optionalDetails");
-		data.put("airline", aircraft.getAirline().getName());
+		Dataset data = super.unbindObject(aircraft, "model", "numberRegistration", "numberPassengers", "loadWeight", "isActive", "optionalDetails", "airline");
 		super.getResponse().addData(data);
 	}
 }
