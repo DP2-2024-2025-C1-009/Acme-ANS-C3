@@ -13,7 +13,7 @@ acme.validation.service.photo-link-valid = Enter a valid URL.
 acme.validation.service.promotion-code-year = The last two digits must correspond to the current year.
 acme.validation.service.promotion-code-pattern = The promotion code must consist of 4 uppercase letters, a hyphen, and two digits, with the last two corresponding to the current year.
 acme.validation.service.duplicated-promotionCode =Promotion Code Invalid
-
+acme.validation.numberRegistration = Invalid Number Registration
 acme.validation.airport.airport-name-length = The airport name length must not exceed 50 characters
 acme.validation.airport.iata-code-pattern = The IATA code must contain exactly three uppercase letters
 acme.validation.airport.iata-code-unique = The IATA code must be unique
