@@ -9,6 +9,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircraft.Aircraft;
+import acme.entities.airline.Airline;
 
 @GuiService
 public class AircraftCreateService extends AbstractGuiService<Administrator, Aircraft> {
@@ -19,16 +20,17 @@ public class AircraftCreateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void authorise() {
-		boolean isAuthorised = false;
-
-		if (super.getRequest().getPrincipal().hasRealmOfType(Administrator.class)) {
-			if (super.getRequest().getMethod().equals("GET"))
-				isAuthorised = true;
-			if (super.getRequest().getMethod().equals("POST") && super.getRequest().getData("id", Integer.class) != null)
-				isAuthorised = super.getRequest().getData("id", Integer.class).equals(0);
+		boolean authorised;
+		authorised = true;
+		if (super.getRequest().hasData("id")) {
+			Integer airlineId = super.getRequest().getData("airline", Integer.class);
+			if (airlineId == null || airlineId != 0) {
+				Airline airline = this.aircraftRepository.findAirlineById(airlineId);
+				authorised = airline != null;
+			}
 		}
 
-		super.getResponse().setAuthorised(isAuthorised);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
