@@ -17,7 +17,7 @@ public @interface ValidFlight {
 
 	// Standard validation properties -----------------------------------------
 
-	String message() default "Flight not valid";
+	String message() default "";
 
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
