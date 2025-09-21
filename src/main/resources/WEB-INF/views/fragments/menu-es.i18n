@@ -55,6 +55,7 @@ master.menu.user-account.manager-profile = Perfil de manager
 master.menu.flight-crew-member = Tripulante
 master.menu.flight-crew-member.flight-assignment.planned = Mis asignaciones planificadas
 master.menu.flight-crew-member.flight-assignment.completed = Mis asignaciones completadas
+master.menu.flight-crew-member.dashboard.show = Ver dashboard
 
 
 # master.menu.manager ########################################################
