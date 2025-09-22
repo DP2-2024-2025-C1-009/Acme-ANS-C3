@@ -34,6 +34,8 @@
 			<acme:menu-suboption
 				code="master.menu.anonymous.favoutite-link-riccarmar"
 				action="https://www.formula1.com/" />
+			<acme:menu-suboption code="master.menu.anonymous.list-flight-assignments" action="/any/flight-assignment/list"/>
+				
 
 		</acme:menu-option>
 		
