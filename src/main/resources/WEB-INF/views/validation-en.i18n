@@ -107,6 +107,8 @@ validation.CrewMember.codePattern = Code Pattern is not correct
 acme.validation.iataCode = Iata Code is not correct
 acme.validation.invalidPhoneNumber = Invalid Format
 acme.validation.airline.iataCode.unique = Iata Code must be unique
+acme.validation.flightCrewMember.role.null = Must not be null
+acme.validation.flightCrewMember.name.null = Must not be null
 
 # Claim validation messages
 acme.validation.claim.isPublished.message = You cannot publish a claim that has not been completed

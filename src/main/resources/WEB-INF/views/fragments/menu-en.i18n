@@ -50,6 +50,7 @@ master.menu.user-account.become-consumer = Become a consumer
 master.menu.user-account.consumer-profile = Consumer profile
 master.menu.user-account.become-manager = Become a manager
 master.menu.user-account.manager-profile = Manager profile
+master.menu.user-account.become-flight-crew-member = Become a crew member
 
 # master.menu.flight-crew-member ####################################################
 
@@ -57,6 +58,7 @@ master.menu.flight-crew-member = Flight Crew Member
 master.menu.flight-crew-member.flight-assignment.planned = My Planned Assignments
 master.menu.flight-crew-member.flight-assignment.completed = My Completed Assignments
 master.menu.flight-crew-member.dashboard.show = Show dashboard
+master.menu.user-account.flight-crew-member-profile = Actualizar perfil
 
 # master.menu.manager ########################################################
 

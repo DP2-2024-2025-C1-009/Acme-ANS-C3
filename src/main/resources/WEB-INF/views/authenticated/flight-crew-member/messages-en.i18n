@@ -1,0 +1,20 @@
+authenticated.flight-crew-member.form.title = Flight Crew Member
+
+authenticated.flight-crew-member.form.label.employeeCode = Employee Code
+authenticated.flight-crew-member.form.label.phoneNumber = Phone
+authenticated.flight-crew-member.form.label.languageSkills = Language Skills
+authenticated.flight-crew-member.form.label.flightCrewMemberStatus = Flight Crew Member Status
+authenticated.flight-crew-member.form.label.salary = Salary
+authenticated.flight-crew-member.form.label.yearsOfExperience = Years of experience
+authenticated.flight-crew-member.form.label.airline = Airline
+
+authenticated.flight-crew-member.form.button.create= Create
+authenticated.flight-crew-member.form.button.update= Update
+
+acme.placeholders.form.flightCrewMember.employeeCode = Employee code
+acme.placeholders.form.flightCrewMember.phoneNumber = Phone number
+acme.placeholders.form.flightCrewMember.languageSkills = Language skills
+acme.placeholders.form.flightCrewMember.flightCrewMemberStatus = Crew member status
+acme.placeholders.form.flightCrewMember.salary = Salary
+acme.placeholders.form.flightCrewMember.yearsOfExperience = Years of experience
+acme.placeholders.form.flightCrewMember.airline = Airline
