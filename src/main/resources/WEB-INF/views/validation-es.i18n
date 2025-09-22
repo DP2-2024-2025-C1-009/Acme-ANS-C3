@@ -109,6 +109,8 @@ acme.validation.activityLog.assignment.must-be-published=El flight assignment de
 acme.validation.activityLog.severityLevel = Debe estar entre 0 y 10
 acme.validation.invalidPhoneNumber = Formato inválido
 acme.validation.airline.iataCode.unique = El código iata debe ser único
+acme.validation.flightCrewMember.role.null = No puede ser nulo
+acme.validation.flightCrewMember.name.null = No puede ser nulo
 
 
 # Mensajes de validación para Claim
