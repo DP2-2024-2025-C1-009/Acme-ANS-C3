@@ -80,7 +80,7 @@ master.menu.customer.passengers = Passengers
 
 # master.menu.any #######################################################
 
-master.menu.any = For all users
+master.menu.any = Any
 master.menu.any.services = Services
 
 # master.menu.assistance-agent ###################################################

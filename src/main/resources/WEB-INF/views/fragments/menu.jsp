@@ -33,14 +33,14 @@
 				action="https://www.realmadrid.com/es-ES" />
 			<acme:menu-suboption
 				code="master.menu.anonymous.favoutite-link-riccarmar"
-				action="https://www.formula1.com/" />
-			<acme:menu-suboption code="master.menu.anonymous.list-flight-assignments" action="/any/flight-assignment/list"/>
-				
+				action="https://www.formula1.com/" />				
 
 		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.any">
 			<acme:menu-suboption code="master.menu.any.services" action="/any/service/list"/>
+			<acme:menu-suboption code="master.menu.anonymous.list-flight-assignments" action="/any/flight-assignment/list"/>
+			
 		</acme:menu-option>
 
 
