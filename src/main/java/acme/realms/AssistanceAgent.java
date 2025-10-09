@@ -42,17 +42,17 @@ public class AssistanceAgent extends AbstractRole {
 	private String				employeeCode;
 
 	@Mandatory
-	@ValidString(min = 1, max = 255, message = "{acme.validation.agent.spoken-languages-length}")
+	@ValidString(min = 1, max = 255)
 	@Automapped
 	private String				spokenLanguages;
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
-	@ValidMoment(past = true, message = "{acme.validation.agent.start-working-date}")
+	@ValidMoment(past = true)
 	private Date				startWorking;
 
 	@Optional
-	@ValidString(min = 0, max = 255, message = "{acme.validation.agent.bio-length}")
+	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				bio;
 

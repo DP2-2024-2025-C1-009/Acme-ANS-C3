@@ -136,3 +136,4 @@ acme.validation.trackingLog.reclaimed.noCompletedLog.message = There must be a p
 acme.validation.trackingLog.creationMoment.message = The creation moment of a tracking log cannot be before that of the claim to which it is associated
 acme.validation.trackingLog.reclaimed.status.message = A reclaimed tracking log must have the same status as the previous completed tracking log
 acme.validation.trackingLog.completedNumber.message = There cannot be more than two completed tracking logs for the same claim
+acme.validation.trackingLog.updateMoment.message = The update date must be after or equal to the creation date.
