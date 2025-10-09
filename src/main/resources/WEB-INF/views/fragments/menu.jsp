@@ -79,8 +79,9 @@
 		</acme:menu-option>
 		
 		<acme:menu-option code = "master.menu.assistance-agent" access = "hasRealm('AssistanceAgent')">
-		<acme:menu-suboption code = "master.menu.assistance-agent.list-claims" action = "/assistance-agent/claim/list"/>
-	</acme:menu-option>
+			<acme:menu-suboption code = "master.menu.assistance-agent.list-claims" action = "/assistance-agent/claim/list"/>
+			<acme:menu-suboption code="master.menu.assistance-agent.dashboard" action="/assistance-agent/assistance-agent-dashboard/show"/>
+		</acme:menu-option>
 	</acme:menu-left>
 	
 	<acme:menu-option code="master.menu.customer" access = "hasRealm('Customer')">
