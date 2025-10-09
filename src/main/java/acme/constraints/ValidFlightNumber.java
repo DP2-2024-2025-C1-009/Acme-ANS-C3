@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
 @Pattern(regexp = "^[A-Z]{3}\\d{4}$")
 public @interface ValidFlightNumber {
 
-	String message() default "Flight number must consist of the airline's IATA code followed by four digits";
+	String message() default "";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

@@ -21,24 +21,35 @@ public class TechnicianTaskUpdateService extends AbstractGuiService<Technician, 
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int id;
 		Task task;
 		Technician technician;
 
-		masterId = super.getRequest().getData("id", int.class);
-		task = this.repository.findTaskById(masterId);
-		technician = task == null ? null : task.getTechnician();
-		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician)
-			&& (task.getType() == TaskType.INSPECTION || task.getType() == TaskType.MAINTENANCE || task.getType() == TaskType.REPAIR || task.getType() == TaskType.MAINTENANCE);
+		if (super.getRequest().hasData("id")) {
 
+			id = super.getRequest().getData("id", int.class);
+			task = this.repository.findTaskById(id);
+
+			if (super.getRequest().hasData("type")) {
+				@SuppressWarnings("unused")
+				TaskType type = super.getRequest().getData("type", TaskType.class);
+			}
+
+			technician = task == null ? null : task.getTechnician();
+
+			status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
+
+		} else
+			status = false;
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Task task;
-		int id = super.getRequest().getData("id", int.class);
+		int id;
 
+		id = super.getRequest().getData("id", int.class);
 		task = this.repository.findTaskById(id);
 
 		super.getBuffer().addData(task);
@@ -46,18 +57,18 @@ public class TechnicianTaskUpdateService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void bind(final Task task) {
+		super.bindObject(task, "type", "description", "priority", "estimatedDuration");
 
-		super.bindObject(task, "ticker", "type", "description", "priority", "estimatedDuration");
 	}
 
 	@Override
 	public void validate(final Task task) {
-		Task existTask;
-		boolean validTicker;
+		boolean status;
 
-		existTask = this.repository.findTaskByTicker(task.getTicker());
-		validTicker = existTask == null || existTask.getId() == task.getId();
-		super.state(validTicker, "ticker", "acme.validation.task-record.ticker.duplicated.message");
+		status = task.isDraftMode();
+
+		super.state(status, "*", "acme.validation.updatePublishedTask.message");
+
 	}
 
 	@Override
@@ -68,11 +79,16 @@ public class TechnicianTaskUpdateService extends AbstractGuiService<Technician, 
 	@Override
 	public void unbind(final Task task) {
 		Dataset dataset;
-		SelectChoices choices = SelectChoices.from(TaskType.class, task.getType());
+		SelectChoices taskTypes;
 
-		dataset = super.unbindObject(task, "ticker", "type", "description", "priority", "estimatedDuration", "draftMode");
-		dataset.put("types", choices);
+		taskTypes = SelectChoices.from(TaskType.class, task.getType());
+
+		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration");
+		//dataset.put("confirmation", false);
+		//dataset.put("readonly", false);
+		dataset.put("type", taskTypes);
 
 		super.getResponse().addData(dataset);
 	}
+
 }

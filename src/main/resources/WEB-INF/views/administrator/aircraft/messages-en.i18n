@@ -1,17 +1,21 @@
 administrator.aircraft.form.title = AirCraft Data
 administrator.aircraft.list.title = AirCrafts
-aircraft.form.label.model = Model
-aircraft.form.label.number-registration = Number Registration
-aircraft.list.label.is-active = Active?
-aircraft.form.label.load-weight = Enter the aircraft's load weight
-aircraft.form.label.is-active = Is the aircraft active?
-aircraft.form.label.airline = Enter the aircraft's airline
-aircraft.form.label.optional-details = Optional Details
-aircraft.form.label.confirmation = I confirm that the information is correct
-aircraft.form.button.create = Create aircraft
-aircraft.form.button.update = Update information
+aircraft.list.button.create = Create
+
 aircraft.list.label.model = Model
-aircraft.list.label.number-registration = Number Registration
-aircraft.list.label.airline = Airline
-aircraft.form.label.number-passengers = Number Passengers
-aircraft.list.button.new = Add new aircraft
+aircraft.list.label.number-registration = Registration Number 
+aircraft.list.label.numberPassengers = Passengers Number
+aircraft.list.label.is-active = Active
+aircraft.list.label.loadWeight = Load Weight
+
+aircraft.form.button.update = Update 
+aircraft.form.label.confirmation = Confirmation
+aircraft.form.button.create = Create
+
+aircraft.form.label.model = Model
+aircraft.form.label.numberRegistration = Registration Number
+aircraft.form.label.numberPassengers =  Passengers Number
+aircraft.form.label.loadWeight = Load Weight
+aircraft.form.label.isActive = Active
+aircraft.form.label.optionalDetails = Details 
+aircraft.form.label.airline = Airline

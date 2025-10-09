@@ -1,0 +1,13 @@
+flight-crew-member.flight-crew-member-dashboard.form.title = Dashboard
+flightCrewMember.dashboard.form.label.lastFiveDestinations = Last 5 destinations 
+flightCrewMember.dashboard.form.label.numberOfLegsLowIncident = Number of legs with at least an activity log whose incident level is between 0 and 3
+flightCrewMember.dashboard.form.label.numberOfLegsMediumIncident = Number of legs with at least an activity log whose incident level is between 4 and 7
+flightCrewMember.dashboard.form.label.numberOfLegsHighIncident = Number of legs with at least an activity log whose incident level is between 8 and 10
+flightCrewMember.dashboard.form.label.crewMembersLastLeg = Flight crew members from last leg
+flightCrewMember.dashboard.form.label.confirmedFlightAssignments = Confirmed flight assignments
+flightCrewMember.dashboard.form.label.pendingFlightAssignments = Pending flight assignments
+flightCrewMember.dashboard.form.label.cancelledFlightAssignments = Cancelled flight assignments
+flightCrewMember.dashboard.form.label.average = Average 
+flightCrewMember.dashboard.form.label.minimum = Minimum 
+flightCrewMember.dashboard.form.label.maximum = Maximum 
+flightCrewMember.dashboard.form.label.standard = Standard 

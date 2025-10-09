@@ -1,9 +1,8 @@
 
 package acme.features.authenticated.technician.maintenanceRecord;
 
-import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,42 +27,25 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int id;
 		MaintenanceRecord maintenanceRecord;
 		Technician technician;
 
-		masterId = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(masterId);
+		id = super.getRequest().getData("id", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
 		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
-		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && //
-			super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId() && //
-			(maintenanceRecord.getStatus() == Status.PENDING || maintenanceRecord.getStatus() == Status.IN_PROGRESS //
-				|| maintenanceRecord.getStatus() == Status.COMPLETED);
-
-		if (status) {
-			String method;
-			int aircraftId;
-			Aircraft aircraft;
-
-			method = super.getRequest().getMethod();
-
-			if (method.equals("GET"))
-				status = true;
-			else {
-				aircraftId = super.getRequest().getData("aircraft", int.class);
-				aircraft = this.repository.findAircraftById(aircraftId);
-				status = aircraftId == 0 || aircraft != null;
-			}
-		}
+		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
 
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
 	public void load() {
 		MaintenanceRecord maintenanceRecord;
-		int id = super.getRequest().getData("id", int.class);
+		int id;
 
+		id = super.getRequest().getData("id", int.class);
 		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
 
 		super.getBuffer().addData(maintenanceRecord);
@@ -71,46 +53,56 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 
 	@Override
 	public void bind(final MaintenanceRecord maintenanceRecord) {
-		Aircraft aircraft;
-		int aircraftId;
-		Date currentMoment;
+		super.bindObject(maintenanceRecord, "moment", "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft");
 
-		aircraftId = super.getRequest().getData("aircraft", int.class);
-		aircraft = this.repository.findAircraftById(aircraftId);
-		currentMoment = MomentHelper.getCurrentMoment();
-
-		super.bindObject(maintenanceRecord, "ticker", "status", "nextInspectionDueDate", "estimatedCost", "notes");
-		maintenanceRecord.setMoment(currentMoment);
-		maintenanceRecord.setAircraft(aircraft);
 	}
 
 	@Override
 	public void validate(final MaintenanceRecord maintenanceRecord) {
-		Collection<Task> tasks;
-		boolean allTasksNotDraft;
-		boolean tasksValid;
-		MaintenanceRecord existMaintenanceRecord;
-		boolean validTicker;
-		Date minimumNextInspection;
-		boolean validNextInspection;
+		int id;
 
-		tasks = this.repository.findTasksAssociatedWithMaintenanceRecordById(maintenanceRecord.getId());
-		allTasksNotDraft = tasks.stream().allMatch(task -> !task.isDraftMode());
-		tasksValid = !tasks.isEmpty() && allTasksNotDraft;
-		if (!tasksValid)
-			super.state(tasksValid, "*", "acme.validation.maintenance-record.tasks.not-draft.message");
+		id = super.getRequest().getData("id", int.class);
 
-		existMaintenanceRecord = this.repository.findMaintenanceRecordByTicker(maintenanceRecord.getTicker());
-		validTicker = existMaintenanceRecord == null || existMaintenanceRecord.getId() == maintenanceRecord.getId();
-		if (!validTicker)
-			super.state(validTicker, "ticker", "acme.validation.task-record.ticker.duplicated.message");
+		List<Task> tasks;
 
-		minimumNextInspection = MomentHelper.deltaFromMoment(maintenanceRecord.getMoment(), 1L, ChronoUnit.HOURS);
-		validNextInspection = maintenanceRecord.getNextInspectionDueDate() == null ? //
-			false : //
-			MomentHelper.isAfterOrEqual(maintenanceRecord.getNextInspectionDueDate(), minimumNextInspection);
+		tasks = this.repository.findPublishedTasksByMaintenanceRecordId(id);
 
-		super.state(validNextInspection, "nextInspectionDueDate", "acme.validation.maintenance-record.moment-next-inspection.publish.messsage");
+		// No se puede relacionar una tarea que no esté publicada con un maintenance record
+
+		//boolean anyTaskUnpublished = false;
+
+		//for (Task t : tasks)
+		//	if (t.isDraftMode() == true) {
+		//		anyTaskUnpublished = true;
+		//		break;
+		//	}
+
+		//super.state(!anyTaskUnpublished, "*", "acme.validation.unpublishedTasks.message");
+
+		boolean atLeastOnePublishedTask = !tasks.isEmpty();
+
+		//for (Task t : tasks)
+		//	if (t.isDraftMode() == false) {
+		//		atLeastOnePublishedTask = true;
+		//		break;
+		//	}
+
+		super.state(atLeastOnePublishedTask, "*", "acme.validation.onePublishedTask.message");
+
+		boolean futureInspection = true;
+		boolean pastMoment = true;
+
+		Date inspection = maintenanceRecord.getInspectionDueDate();
+
+		Date moment = maintenanceRecord.getMoment();
+
+		if (inspection != null && moment != null) {
+			futureInspection = inspection.after(MomentHelper.getCurrentMoment());
+			pastMoment = moment.before(MomentHelper.getCurrentMoment()) || moment.equals(MomentHelper.getCurrentMoment());
+		}
+
+		super.state(futureInspection, "inspectionDueDate", "acme.validation.maintenanceRecord.futureInspection.message");
+		super.state(pastMoment, "moment", "acme.validation.maintenanceRecord.pastMoment.message");
 	}
 
 	@Override
@@ -122,20 +114,23 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 	@Override
 	public void unbind(final MaintenanceRecord maintenanceRecord) {
 		Dataset dataset;
-		SelectChoices statusChoices;
+
+		SelectChoices maintenanceRecordStatus;
 		SelectChoices aircraftChoices;
-		Collection<Aircraft> aircrafts;
 
-		statusChoices = SelectChoices.from(Status.class, maintenanceRecord.getStatus());
-		aircrafts = this.repository.findAllAircrafts();
-		aircraftChoices = SelectChoices.from(aircrafts, "numberRegistration", maintenanceRecord.getAircraft());
+		List<Aircraft> aircrafts = this.repository.findAllAircrafts();
 
-		dataset = super.unbindObject(maintenanceRecord, "ticker", "moment", "nextInspectionDueDate", "estimatedCost", "notes", "draftMode");
-		dataset.put("status", statusChoices.getSelected().getKey());
-		dataset.put("statuses", statusChoices);
-		dataset.put("aircraft", aircraftChoices.getSelected().getKey());
-		dataset.put("aircrafts", aircraftChoices);
+		aircraftChoices = SelectChoices.from(aircrafts, "registrationNumber", maintenanceRecord.getAircraft());
+
+		maintenanceRecordStatus = SelectChoices.from(Status.class, maintenanceRecord.getStatus());
+
+		dataset = super.unbindObject(maintenanceRecord, "moment", "status", "inspectionDueDate", "estimatedCost", "notes");
+		//dataset.put("confirmation", false);
+		//dataset.put("readonly", false);
+		dataset.put("status", maintenanceRecordStatus);
+		dataset.put("aircraft", aircraftChoices);
 
 		super.getResponse().addData(dataset);
 	}
+
 }

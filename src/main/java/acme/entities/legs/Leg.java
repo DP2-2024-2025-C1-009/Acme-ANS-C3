@@ -1,6 +1,7 @@
 
 package acme.entities.legs;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
@@ -73,6 +74,21 @@ public class Leg extends AbstractEntity {
 	public Double getDuration() {
 		Duration result = MomentHelper.computeDuration(this.getScheduledDeparture(), this.getScheduledArrival());
 		return result.getSeconds() / 60.;
+	}
+
+	@Transient
+	public String getLabel() {
+		SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/YYYY HH:mm");
+
+		String departureCity = this.departureAirport.getCity();
+		String departureCountry = this.departureAirport.getCountry();
+		String arrivalCity = this.arrivalAirport.getCity();
+		String arrivalCountry = this.arrivalAirport.getCountry();
+		String departureTime = timeFormat.format(this.getScheduledDeparture());
+		String arrivalTime = timeFormat.format(this.getScheduledArrival());
+
+		return String.format("%s: %s - %s: %s %s - %s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
+
 	}
 
 	// Relationships -------------------------------------------------------------

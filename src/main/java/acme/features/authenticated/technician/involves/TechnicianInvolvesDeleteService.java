@@ -1,17 +1,11 @@
 
 package acme.features.authenticated.technician.involves;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.models.Dataset;
-import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.maintenance.Involves;
-import acme.entities.maintenance.MaintenanceRecord;
-import acme.entities.maintenance.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -24,25 +18,12 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 	@Override
 	public void authorise() {
 		boolean status;
-		int taskId;
-		int maintenanceRecordId;
-		Task task;
-		MaintenanceRecord maintenanceRecord;
-		int masterId;
+		int id;
 		Involves involves;
-		boolean draftModeRecord;
 
-		masterId = super.getRequest().getData("id", int.class);
-		involves = this.repository.findInvolvesById(masterId);
-		taskId = involves == null ? 0 : involves.getTask().getId();
-		maintenanceRecordId = involves == null ? 0 : involves.getMaintenanceRecord().getId();
-
-		task = this.repository.findTaskById(taskId);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
-		draftModeRecord = maintenanceRecord == null ? false : maintenanceRecord.isDraftMode();
-		status = (taskId == 0 && maintenanceRecordId == 0 || task != null && maintenanceRecord != null) //
-			&& draftModeRecord && //
-			super.getRequest().getPrincipal().getActiveRealm().getId() == maintenanceRecord.getTechnician().getId();
+		id = super.getRequest().getData("id", int.class);
+		involves = this.repository.findInvolvesById(id);
+		status = involves != null && super.getRequest().getPrincipal().hasRealm(involves.getMaintenanceRecord().getTechnician());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -50,8 +31,9 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 	@Override
 	public void load() {
 		Involves involves;
-		int id = super.getRequest().getData("id", int.class);
+		int id;
 
+		id = super.getRequest().getData("id", int.class);
 		involves = this.repository.findInvolvesById(id);
 
 		super.getBuffer().addData(involves);
@@ -59,24 +41,11 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 
 	@Override
 	public void bind(final Involves involves) {
-		int taskId;
-		int maintenanceRecordId;
-		Task task;
-		MaintenanceRecord maintenanceRecord;
-
-		taskId = super.getRequest().getData("task", int.class);
-		maintenanceRecordId = super.getRequest().getData("maintenanceRecord", int.class);
-		task = this.repository.findTaskById(taskId);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
-
 		super.bindObject(involves);
-		involves.setTask(task);
-		involves.setMaintenanceRecord(maintenanceRecord);
 	}
 
 	@Override
 	public void validate(final Involves involves) {
-
 	}
 
 	@Override
@@ -84,34 +53,4 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 		this.repository.delete(involves);
 	}
 
-	@Override
-	public void unbind(final Involves involves) {
-		Dataset dataset;
-		SelectChoices taskChoices;
-		SelectChoices maintenanceRecordChoices;
-		Collection<Task> tasks;
-		Collection<MaintenanceRecord> maintenanceRecords;
-		final boolean draftRecord;
-
-		tasks = this.repository.findAllTasks();
-		taskChoices = SelectChoices.from(tasks, "ticker", involves.getTask());
-
-		maintenanceRecords = this.repository.findAllDraftMaintenanceRecords();
-		maintenanceRecordChoices = SelectChoices.from(maintenanceRecords, "ticker", involves.getMaintenanceRecord());
-
-		dataset = super.unbindObject(involves);
-
-		dataset.put("task", taskChoices.getSelected().getKey());
-		dataset.put("tasks", taskChoices);
-		dataset.put("taskTechnician", involves.getTask().getTechnician().getLicenseNumber());
-
-		dataset.put("maintenanceRecord", maintenanceRecordChoices.getSelected().getKey());
-		dataset.put("maintenanceRecords", maintenanceRecordChoices);
-		dataset.put("maintenanceRecordTechnician", involves.getTask().getTechnician().getLicenseNumber());
-
-		draftRecord = involves.getMaintenanceRecord().isDraftMode();
-		super.getResponse().addGlobal("draftRecord", draftRecord);
-
-		super.getResponse().addData(dataset);
-	}
 }

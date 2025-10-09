@@ -4,16 +4,12 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="technician.task.list.label.ticker" path="ticker" width="40%"/>
-	<acme:list-column code="technician.task.list.label.type" path="type" width="40%"/>
-	<acme:list-column code="technician.task.list.label.priority" path="priority" width="20%"/>
-	<acme:list-payload path="payload"/>
+	<acme:list-column code="technician.task.list.label.description" path="description" width="10%"/>
+	<acme:list-column code="technician.task.list.label.type" path="type" width="10%"/>
+	<acme:list-column code="technician.task.list.label.priority" path="priority" width="10%"/>
+	<acme:list-column code="technician.task.list.label.estimatedDuration" path="estimatedDuration" width="10%"/>
+	<acme:list-column code="technician.task.list.label.draftMode" path="draftMode" width="10%"/>
+	<acme:list-payload path="/payload"/>
 </acme:list>
 
-<jstl:if test="${_command == 'list'}">
-	<acme:button code="technician.task.list.button.create" action="/technician/task/create"/>
-</jstl:if>
-
-<jstl:if test="${_command == 'list-from-record'}">
-	<acme:button code="technician.task.list.button.add" action="/technician/involves/create"/>
-</jstl:if>
+<acme:button code="technician.task.list.button.create" action="/technician/task/create"/>

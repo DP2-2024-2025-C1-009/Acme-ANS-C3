@@ -33,12 +33,12 @@
 				action="https://www.realmadrid.com/es-ES" />
 			<acme:menu-suboption
 				code="master.menu.anonymous.favoutite-link-riccarmar"
-				action="https://www.formula1.com/" />
+				action="https://www.formula1.com/" />				
 
 		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.any">
-			<acme:menu-suboption code="master.menu.any.services" action="/any/service/list"/>
+			<acme:menu-suboption code="master.menu.anonymous.list-flight-assignments" action="/any/flight-assignment/list"/>
 		</acme:menu-option>
 
 
@@ -70,6 +70,8 @@
 		<acme:menu-option code="master.menu.flight-crew-member" access="hasRealm('FlightCrewMember')">
 	<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.planned" action="/flight-crew-member/flight-assignment/list-planned"/>
 	<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.completed" action="/flight-crew-member/flight-assignment/list-completed"/>
+	<acme:menu-suboption code="master.menu.flight-crew-member.dashboard.show" action="/flight-crew-member/flight-crew-member-dashboard/show"/>
+		
 </acme:menu-option>
 
 		<acme:menu-option code="master.menu.consumer" access="hasRealm('Consumer')">
@@ -105,6 +107,8 @@
 				access="hasRealm('Consumer')" />
 			<acme:menu-suboption code="master.menu.user-account.become-manager" action="/authenticated/manager/create" access="!hasRealm('Manager')"/>
 			<acme:menu-suboption code="master.menu.user-account.manager-profile" action="/authenticated/manager/update" access="hasRealm('Manager')"/>
+			<acme:menu-suboption code="master.menu.user-account.become-flight-crew-member" action="/authenticated/flight-crew-member/create" access="!hasRealm('FlightCrewMember')"/>
+			<acme:menu-suboption code="master.menu.user-account.flight-crew-member-profile" action="/authenticated/flight-crew-member/update" access="hasRealm('FlightCrewMember')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>

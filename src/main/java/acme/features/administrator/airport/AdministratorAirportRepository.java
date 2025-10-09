@@ -1,7 +1,7 @@
 
 package acme.features.administrator.airport;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +16,6 @@ public interface AdministratorAirportRepository extends AbstractRepository {
 	Airport findAirportById(int id);
 
 	@Query("select a from Airport a")
-	List<Airport> findAllAirports();
+	Collection<Airport> findAllAirports();
 
 }

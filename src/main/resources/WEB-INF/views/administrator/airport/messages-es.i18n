@@ -3,10 +3,11 @@ administrator.airport.label.iata = Código IATA:
 administrator.airport.label.scope = Alcance operativo:
 administrator.airport.label.city = Ciudad:
 administrator.airport.label.country = País:
-administrator.airport.label.website = Sitio web:
-administrator.airport.label.email = Correo electrónico:
-administrator.airport.label.contactPhoneNumber = Número de teléfono de contacto:
-
+administrator.airport.label.operationalScope = Alcance Operativo:
+administrator.airport.label.country = País
+administrator.airport.label.website = Web
+administrator.airport.label.email = Email
+administrator.airport.label.contactPhoneNumber = Teléfono
 administrator.airport.button.create = Crear
 administrator.airport.button.update = Actualizar
 

@@ -21,15 +21,14 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int id;
 		Task task;
 		Technician technician;
 
-		masterId = super.getRequest().getData("id", int.class);
-		task = this.repository.findTaskById(masterId);
+		id = super.getRequest().getData("id", int.class);
+		task = this.repository.findTaskById(id);
 		technician = task == null ? null : task.getTechnician();
-		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId()
-			&& (task.getType() == TaskType.INSPECTION || task.getType() == TaskType.MAINTENANCE || task.getType() == TaskType.REPAIR || task.getType() == TaskType.MAINTENANCE);
+		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -37,8 +36,9 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 	@Override
 	public void load() {
 		Task task;
-		int id = super.getRequest().getData("id", int.class);
+		int id;
 
+		id = super.getRequest().getData("id", int.class);
 		task = this.repository.findTaskById(id);
 
 		super.getBuffer().addData(task);
@@ -46,18 +46,12 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 
 	@Override
 	public void bind(final Task task) {
+		super.bindObject(task, "priority", "type", "description", "estimatedDuration");
 
-		super.bindObject(task, "ticker", "type", "description", "priority", "estimatedDuration");
 	}
 
 	@Override
 	public void validate(final Task task) {
-		Task existTask;
-		boolean validTicker;
-
-		existTask = this.repository.findTaskByTicker(task.getTicker());
-		validTicker = existTask == null || existTask.getId() == task.getId();
-		super.state(validTicker, "ticker", "acme.validation.task-record.ticker.duplicated.message");
 	}
 
 	@Override
@@ -69,11 +63,17 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 	@Override
 	public void unbind(final Task task) {
 		Dataset dataset;
-		SelectChoices choices = SelectChoices.from(TaskType.class, task.getType());
 
-		dataset = super.unbindObject(task, "ticker", "type", "description", "priority", "estimatedDuration", "draftMode");
-		dataset.put("types", choices);
+		SelectChoices taskTypes;
+
+		taskTypes = SelectChoices.from(TaskType.class, task.getType());
+
+		dataset = super.unbindObject(task, "priority", "description", "estimatedDuration");
+		//dataset.put("confirmation", false);
+		//dataset.put("readonly", false);
+		dataset.put("type", taskTypes);
 
 		super.getResponse().addData(dataset);
 	}
+
 }

@@ -17,6 +17,7 @@ master.menu.anonymous.favourite-link-hugborang = 53348457A: Borrego Angulo, Hugo
 master.menu.anonymous.favourite-link-jesmarde2 = 49160644F: Martín de Acuña, Jesús
 master.menu.anonymous.favourite-link-cargalrod2 = 49193968G: Gallero Rodríguez, Carlos
 master.menu.anonymous.favoutite-link-riccarmar = 80230334D: Carreño Mariño, Ricardo
+master.menu.anonymous.list-flight-assignments = Listar Asignaciones de vuelo
 
 # master.menu.administrator ###################################################
 
@@ -49,12 +50,15 @@ master.menu.user-account.become-consumer = Hazte consumidor
 master.menu.user-account.consumer-profile = Perfil de consumidor
 master.menu.user-account.become-manager = Hazte manager
 master.menu.user-account.manager-profile = Perfil de manager
+master.menu.user-account.become-flight-crew-member = Hacerse tripulante
 
 # master.menu.flight-crew-member ####################################################
 
 master.menu.flight-crew-member = Tripulante
 master.menu.flight-crew-member.flight-assignment.planned = Mis asignaciones planificadas
 master.menu.flight-crew-member.flight-assignment.completed = Mis asignaciones completadas
+master.menu.flight-crew-member.dashboard.show = Ver dashboard
+master.menu.user-account.flight-crew-member-profile = Actualizar perfil
 
 
 # master.menu.manager ########################################################
@@ -75,7 +79,7 @@ master.menu.customer.passengers = Pasajeros
 
 # master.menu.any #######################################################
 
-master.menu.any = Para todos los usuarios
+master.menu.any = Cualquiera
 master.menu.any.services = Servicios
 
 # master.menu.assistance-agent ###################################################

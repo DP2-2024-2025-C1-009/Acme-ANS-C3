@@ -20,10 +20,10 @@ public class Involves extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Task				task;
+	private MaintenanceRecord	maintenanceRecord;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private MaintenanceRecord	maintenanceRecord;
+	private Task				task;
 }

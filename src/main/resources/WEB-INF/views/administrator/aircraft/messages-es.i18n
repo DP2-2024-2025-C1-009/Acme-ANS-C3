@@ -1,17 +1,23 @@
 administrator.aircraft.form.title = Datos de la aeronave
 administrator.aircraft.list.title = Aeronaves
-aircraft.form.label.model = Modelo
-aircraft.list.label.number-registration = Número de Registro
-aircraft.list.label.is-active = Activo?
-aircraft.form.label.load-weight = Inserta el peso de carga de la aeronave
-aircraft.form.label.is-active = Esta la aeronave activa?
-aircraft.form.label.airline = Inserte la aerolinea correspondiente
-aircraft.form.label.optional-details = Detalles opcionales
-aircraft.form.label.confirmation = Confirmo que la información es correcta
-aircraft.form.button.create = Crear aeronave
-aircraft.form.button.update = Actualizar información
+aircraft.list.button.create = Crear
+
+
 aircraft.list.label.model = Modelo
-aircraft.form.label.number-registration = Número de Registro
-aircraft.list.label.airline = Aerolínea
-aircraft.form.label.number-passengers = Número de pasajeros
-aircraft.list.button.new = Añadir nueva aeronave
+aircraft.list.label.number-registration = Numero de registro
+aircraft.list.label.numberPassengers = Numero de pasajeros
+aircraft.list.label.is-active = Activo
+aircraft.list.label.loadWeight = Peso de carga
+
+aircraft.form.button.update = Actualizar 
+aircraft.form.label.confirmation = Confirmar
+aircraft.form.button.create = Crear
+
+
+aircraft.form.label.model = Modelo
+aircraft.form.label.numberRegistration = Número de Registro
+aircraft.form.label.numberPassengers =  Número de pasajeros
+aircraft.form.label.loadWeight = Peso de carga
+aircraft.form.label.isActive = Activo
+aircraft.form.label.optionalDetails = Detalles
+aircraft.form.label.airline = Aerolinea

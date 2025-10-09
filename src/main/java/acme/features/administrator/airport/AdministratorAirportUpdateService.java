@@ -24,7 +24,10 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		Integer id = super.getRequest().getData("id", Integer.class);
+		Airport airport = this.repository.findAirportById(id);
+		boolean authorised = airport != null && super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
@@ -61,10 +64,9 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 		Dataset dataset;
 
 		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
-		dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "country", "website", "email", "contactPhoneNumber");
+		dataset = super.unbindObject(airport, "airportName", "iataCode", "city", "country", "website", "email", "contactPhoneNumber", "operationalScope");
 		dataset.put("operationalScope", choices);
 		dataset.put("confirmation", false);
-		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 	}
