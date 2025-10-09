@@ -1,0 +1,27 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+assistance-agent.assistance-agent-dashboard.form.title =  Assistance Agent Dashboard
+
+assistance-agent.dashboard.form.title.general-indicators=General Indicators
+
+assistance-agent.dashboard.form.label.ratio-of-claims-stored-successfully=Ratio of Claims Stored Successfully
+assistance-agent.dashboard.form.label.ratio-of-claims-rejected=Ratio of Claims Rejected
+assistance-agent.dashboard.form.label.top-three-months-highest-number-of-claims=Top 3 Months with Highest Number of Claims
+
+assistance-agent.dashboard.form.label.avg-number-of-logs-claims-have=Average Logs per Claim
+assistance-agent.dashboard.form.label.min-number-of-logs-claims-have=Minimum Logs per Claim
+assistance-agent.dashboard.form.label.max-number-of-logs-claims-have=Maximum Logs per Claim
+assistance-agent.dashboard.form.label.dev-number-of-logs-claims-have=Standard Deviation of Logs per Claim
+
+assistance-agent.dashboard.form.label.avg-number-assisted-last-month=Average Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.min-number-assisted-last-month=Minimum Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.max-number-assisted-last-month=Maximum Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.dev-number-assisted-last-month=Standard Deviation Assisted Claims - Last Month

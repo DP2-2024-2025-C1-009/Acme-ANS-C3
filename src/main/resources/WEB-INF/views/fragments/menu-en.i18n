@@ -87,3 +87,4 @@ master.menu.any.services = Services
 
 master.menu.assistance-agent 						= Assistance agent
 master.menu.assistance-agent.list-claims 			= List claims
+master.menu.assistance-agent.dashboard 				= Dashboard
