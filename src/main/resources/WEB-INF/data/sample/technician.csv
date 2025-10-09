@@ -1,4 +1,4 @@
-key,key:userAccount,licenseNumber,phoneNumber,specialisation,healthTestPassed,yearsExperience,certifications
+key,key:userAccount,licenseNumber,phoneNumber,specialisation,annualHealthTest,yearsOfExperience,certifications
 technician-01,user-account-technician-01,TN123456,+1234567890,Engine Maintenance,true,5,"FAA Certified A&P License"
 technician-02,user-account-technician-02,LI654321,+306912345678,Structural Inspection,false,3,"Basic Maintenance Certification"
 technician-03,user-account-technician-03,AV789012,+34911223344,Avionics Inspection,true,4,"FAA Certified Avionics Specialist"

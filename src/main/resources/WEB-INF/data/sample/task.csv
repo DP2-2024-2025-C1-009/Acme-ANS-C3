@@ -1,21 +1,36 @@
-key,ticker,type,description,priority,estimatedDuration,draftMode,key:technician
-# type
-task-01,TASK-01,MAINTENANCE,Standard maintenance task,5,3.50,false,technician-01
-task-02,TASK-02,INSPECTION,Standard inspection task,7,2.00,false,technician-01
-task-03,TASK-03,REPAIR,Standard repair task,4,1.00,false,technician-01
-task-04,TASK-04,SYSTEM_CHECK,Standard system check task,6,4.00,false,technician-01
-# description
-task-05,TASK-05,MAINTENANCE,A,5,3.50,false,technician-01
-task-06,TASK-06,MAINTENANCE,Descripcion mediana,5,3.50,false,technician-01
-task-07,TASK-07,INSPECTION,"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",5,3.50,false,technician-01
-# priority
-task-08,TASK-08,MAINTENANCE,Priority lower boundary,0,3.50,false,technician-01
-task-09,TASK-09,MAINTENANCE,Priority upper boundary,10,3.50,false,technician-01
-# estimatedDuration
-task-10,TASK-10,INSPECTION,Duration zero,5,0.00,false,technician-01
-task-11,TASK-11,INSPECTION,Valid duration,5,5.50,false,technician-01
-# description special characters
-task-12,TASK-12,REPAIR,"<script>alert('Hacked!')</script>",5,3.50,false,technician-01
-task-13,TASK-13,REPAIR,"โลเร็ม อิปซัม",5,3.50,false,technician-01
-task-14,TASK-14,SYSTEM_CHECK,"Prueba",5,3.50,false,technician-01
-task-15,TASK-15,INSPECTION,Test,5,5.50,true,technician-02
+key,type,description,priority,estimatedDuration,key:technician,draftMode
+# base entity
+task-00,INSPECTION,Lorem ipsum,5,7,technician-01,true
+# type - standard variations
+task-01,MAINTENANCE,Lorem ipsum,5,7,technician-01,true
+task-02,INSPECTION,Lorem ipsum,5,7,technician-01,true
+task-03,REPAIR,Lorem ipsum,5,7,technician-01,true
+task-04,SYSTEM_CHECK,Lorem ipsum,5,7,technician-01,true
+# description - standard variations
+task-05,INSPECTION,L,5,7,technician-01,true
+task-06,INSPECTION,Lo,5,7,technician-01,true
+task-07,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod te",5,7,technician-01,true
+task-08,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,7,technician-01,true
+task-09,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",5,7,technician-01,true
+task-10,INSPECTION,โลเร็ม อิปซัม,5,7,technician-01,true
+task-11,INSPECTION,لوريم إيبسوم,5,7,technician-01,true
+task-12,INSPECTION,洛伦·伊普森,5,7,technician-01,true
+task-13,INSPECTION,<marquee>Hacked</marquee>,5,7,technician-01,true
+task-14,INSPECTION,<script>alert(‘Hacked!’)</script>,5,7,technician-01,true
+task-15,INSPECTION,' or 'A' = 'A,5,7,technician-01,true
+# priority - standard variations
+task-16,INSPECTION,Lorem ipsum,0,7,technician-01,true
+task-17,INSPECTION,Lorem ipsum,1,7,technician-01,true
+task-18,INSPECTION,Lorem ipsum,5,7,technician-01,true
+task-19,INSPECTION,Lorem ipsum,9,7,technician-01,true
+task-20,INSPECTION,Lorem ipsum,10,7,technician-01,true
+# estimatedDuration - standard variations
+task-21,INSPECTION,Lorem ipsum,5,0,technician-01,true
+task-22,INSPECTION,Lorem ipsum,5,1,technician-01,true
+task-23,INSPECTION,Lorem ipsum,5,500,technician-01,true
+task-24,INSPECTION,Lorem ipsum,5,999,technician-01,true
+task-25,INSPECTION,Lorem ipsum,5,1000,technician-01,true
+# technician - standard variations
+task-26,INSPECTION,Lorem ipsum,5,7,technician-02,true
+# draftMode - standard variations
+task-27,INSPECTION,Lorem ipsum,5,7,technician-01,false
