@@ -1,4 +1,4 @@
 key,key:userAccount,employee-code,spoken-languages,start-working,bio,salary,photo-link,key:airline
 agent-01,user-account-agent-01,AA000001,"Spanish, English, Portuguese",2010/05/15 00:00,Assistance Agent Number 1,EUR 100,https://acme.com/photo.png,airline-01
 agent-02,user-account-agent-02,AA000002,"French, German, Japanese",2010/05/15 00:00,Assistance Agent Number 2,EUR 100,https://acme.com/photo.png,airline-02
-agent-03,user-account-agent-03,AA000003,English,2011/05/15 00:00,null,null,null,null
+agent-03,user-account-agent-03,AA000003,English,2010/05/15 00:00,null,null,null,airline-03
