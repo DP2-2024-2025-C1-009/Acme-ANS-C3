@@ -1,7 +1,7 @@
 
 package acme.features.authenticated.technician;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,31 +15,31 @@ import acme.realms.Technician;
 public class TechnicianTaskListService extends AbstractGuiService<Technician, Task> {
 
 	@Autowired
-	private TechnicianTaskRepository repository;
+	TechnicianTaskRepository repository;
 
 
 	@Override
 	public void authorise() {
-		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Technician.class);
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		Collection<Task> object;
-		int technicianId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		List<Task> tasks;
+		int techId;
+		techId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		tasks = this.repository.findTasksByTechnicianId(techId);
 
-		object = this.repository.findTasksByTechnicianId(technicianId);
-
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(tasks);
 	}
 
 	@Override
-	public void unbind(final Task task) {
-		Dataset dataset = super.unbindObject(task, "ticker", "type", "priority");
-		super.addPayload(dataset, task, "description", "estimatedDuration");
+	public void unbind(final Task tasks) {
+		Dataset dataset;
+
+		dataset = super.unbindObject(tasks, "type", "description", "priority", "estimatedDuration", "technician", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

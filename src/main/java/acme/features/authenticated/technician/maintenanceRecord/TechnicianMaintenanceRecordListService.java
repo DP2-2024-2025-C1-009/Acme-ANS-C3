@@ -1,7 +1,7 @@
 
 package acme.features.authenticated.technician.maintenanceRecord;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,32 +15,34 @@ import acme.realms.Technician;
 public class TechnicianMaintenanceRecordListService extends AbstractGuiService<Technician, MaintenanceRecord> {
 
 	@Autowired
-	private TechnicianMaintenanceRecordRepository repository;
+	TechnicianMaintenanceRecordRepository repository;
 
 
 	@Override
 	public void authorise() {
-		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Technician.class);
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		Collection<MaintenanceRecord> object;
-		int technicianId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		List<MaintenanceRecord> maintenanceRecords;
+		int technicianId;
 
-		object = this.repository.findMainteanceRecordsByTechnicianId(technicianId);
+		technicianId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		super.getBuffer().addData(object);
+		maintenanceRecords = this.repository.findMaintenanceRecordsByTechnicianId(technicianId);
+
+		super.getBuffer().addData(maintenanceRecords);
+
 	}
 
 	@Override
-	public void unbind(final MaintenanceRecord maintenanceRecord) {
-		Dataset dataset = super.unbindObject(maintenanceRecord, "ticker", "moment", "status", "nextInspectionDueDate", "draftMode");
-		dataset.put("aircraft", maintenanceRecord.getAircraft().getNumberRegistration());
-		super.addPayload(dataset, maintenanceRecord);
+	public void unbind(final MaintenanceRecord maintenanceRecords) {
+		Dataset dataset;
+
+		dataset = super.unbindObject(maintenanceRecords, "moment", "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "technician", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

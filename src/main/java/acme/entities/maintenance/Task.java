@@ -1,7 +1,6 @@
 
 package acme.entities.maintenance;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,7 +14,6 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.constraints.ValidTicker;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,16 +22,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "task", indexes = {
-	@Index(columnList = "technician_id")
+	@Index(columnList = "technician_id"), @Index(columnList = "draftMode")
 })
 public class Task extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
-
-	@Mandatory
-	@ValidTicker
-	@Column(unique = true)
-	private String				ticker;
 
 	@Mandatory
 	@Enumerated(EnumType.STRING)

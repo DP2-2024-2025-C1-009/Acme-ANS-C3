@@ -14,7 +14,13 @@ import acme.realms.Technician;
 public class TechnicianInvolvesController extends AbstractGuiController<Technician, Involves> {
 
 	@Autowired
+	private TechnicianInvolvesListService	listService;
+
+	@Autowired
 	private TechnicianInvolvesCreateService	createService;
+
+	@Autowired
+	private TechnicianInvolvesShowService	showService;
 
 	@Autowired
 	private TechnicianInvolvesDeleteService	deleteService;
@@ -22,6 +28,8 @@ public class TechnicianInvolvesController extends AbstractGuiController<Technici
 
 	@PostConstruct
 	protected void initialise() {
+		super.addBasicCommand("list", this.listService);
+		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("delete", this.deleteService);
 	}

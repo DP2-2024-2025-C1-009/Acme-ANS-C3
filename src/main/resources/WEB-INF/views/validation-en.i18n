@@ -48,17 +48,26 @@ acme.validation.aircraft.load-weight-range = The aircraft load must be a value b
 acme.validation.aircraft.optional-details-length = The length of optional details must not exceed 255 characters.
 acme.validation.aircraft.number-passengers-range = The number of passengers must be between 1 and 255.
 
-acme.validation.task-record.ticker.message = The ticker must be between 5 and 15 characters long and can only contain letters, numbers, underscores and hyphens
-acme.validation.maintenance-record.moment.past.message = The moment of maintenance should be in the past.
-acme.validation.nextInspection.message = The next inspection due date must be at least one hour later than the moment of the maintenance record
-acme.validation.task-record.ticker.duplicated.message = The ticker already exists, use a different one
-acme.validation.maintenance-record.tasks.not-draft.message = The maintenance record must have at least one published task and cannot have any unpublished task
-acme.validation.maintenance-record.moment-next-inspection.update.messsage = When updating this maintenance record, the moment will be set to the current date and hour. This value for next inspection is not valid
-acme.validation.maintenance-record.moment-next-inspection.publish.messsage = When publishing this maintenance record, the moment will be set to the current date and hour. This value for next inspection is not valid
-acme.validation.involves.draft-record.message = Published maintenance record. The involvements in tasks of a published maintenance record must not be modified
-acme.validation.technician.license-number.duplicated.message = The license number is already on use
-acme.validation.technician.phone-number.duplicated.message = The phone number is already on use
-acme.validation.maintenance-record.next-inspection.future.message = The next inspection due date must be in the future.
+acme.validation.technician.incorrectly-formatted-licenseNumber.message = The ‘licenseNumber’ field does not conform to the pattern "AB123456" or "ABC123456".
+acme.validation.technician.used-licenseNumber.message = The license number is already in use.
+acme.validation.technician.invalid-licenseNumber.message = Invalid License Number
+acme.validation.maintenanceRecord.nextInspectionPriorMaintenanceMoment.message = The date of the next inspection cannot be prior to the moment of the maintenance record
+acme.validation.involves.alreadyInvolvedTask.message = This Task is already related to this Maintenance Record
+acme.validation.maintenanceRecord.futureInspection.message = The date of the next inspection should be in the future
+acme.validation.maintenanceRecord.pastMoment.message = The moment of the maintenance record must be actual or in the past
+
+acme.validation.incorrectly-formatted-phoneNumber.message = You have to use a correct phone number format, Ex: +34123456789, 123456789
+acme.validation.incorrectly-formatted-iataCode.message = You have to use a correct iata code format, Ex: JFK, LAX
+acme.validation.incorrectly-formatted-flightNumber.message = You have to use a correct flight number format, Ex: XXX9999,LLL1234
+acme.validation.incorrectly-formatted-identifierNumber.message =  You have to use a correct identifier number format,Ex: MM0001, MMM9999
+
+acme.validation.unpublishedTasks.message = This Maintenance Record has unpublished Tasks
+acme.validation.onePublishedTask.message = This Maintenance Record doesn't have any published Task
+
+acme.validation.updatePublishedTask.message = You can´t update a published task
+acme.validation.deletePublishedTask.message = You can´t delete a published task
+
+acme.validation.nonExistingTask.message = This task does not exists
 
 acme.validation.review.alias-length = The alias/name length must not exceed 50 characters.
 acme.validation.review.moment-past = The review date must be in the past.

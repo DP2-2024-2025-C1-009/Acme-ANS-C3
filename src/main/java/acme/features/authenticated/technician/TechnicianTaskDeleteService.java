@@ -1,17 +1,11 @@
 
 package acme.features.authenticated.technician;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.models.Dataset;
-import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.maintenance.Involves;
 import acme.entities.maintenance.Task;
-import acme.entities.maintenance.TaskType;
 import acme.realms.Technician;
 
 @GuiService
@@ -24,14 +18,14 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int id;
 		Task task;
 		Technician technician;
 
-		masterId = super.getRequest().getData("id", int.class);
-		task = this.repository.findTaskById(masterId);
+		id = super.getRequest().getData("id", int.class);
+		task = this.repository.findTaskById(id);
 		technician = task == null ? null : task.getTechnician();
-		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == technician.getId();
+		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -39,8 +33,9 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 	@Override
 	public void load() {
 		Task task;
-		int id = super.getRequest().getData("id", int.class);
+		int id;
 
+		id = super.getRequest().getData("id", int.class);
 		task = this.repository.findTaskById(id);
 
 		super.getBuffer().addData(task);
@@ -48,30 +43,48 @@ public class TechnicianTaskDeleteService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void bind(final Task task) {
-
-		super.bindObject(task, "ticker", "type", "description", "priority", "estimatedDuration");
+		super.bindObject(task);
 	}
 
 	@Override
 	public void validate(final Task task) {
+		boolean status;
 
+		status = task.isDraftMode();
+
+		super.state(status, "*", "acme.validation.deletePublishedTask.message");
 	}
 
 	@Override
 	public void perform(final Task task) {
-		Collection<Involves> involves = this.repository.findInvolvesByTaskId(task.getId());
-		this.repository.deleteAll(involves);
+
+		//List<Involves> invs;
+
+		//invs = this.involvesRepository.findInvolvesByTaskId(task.getId());
+
+		// No debería de haber nada en la lista ya que para borrar una task debe estar sin publicar,
+		// y no se puede relacionar un maintenance record con una task sin publicar.
+
+		//for (Involves i : invs)
+		//this.involvesRepository.delete(i);
+
 		this.repository.delete(task);
 	}
 
 	@Override
 	public void unbind(final Task task) {
-		Dataset dataset;
-		SelectChoices choices = SelectChoices.from(TaskType.class, task.getType());
+		//Dataset dataset;
+		//SelectChoices taskTypes;
 
-		dataset = super.unbindObject(task, "ticker", "type", "description", "priority", "estimatedDuration", "draftMode");
-		dataset.put("types", choices);
+		//taskTypes = SelectChoices.from(TaskType.class, task.getType());
 
-		super.getResponse().addData(dataset);
+		//dataset = super.unbindObject(task);
+		//dataset.put("confirmation", false);
+		//dataset.put("readonly", false);
+		//dataset.put("type", taskTypes);
+		//dataset.put("technician", task.getTechnician());
+
+		//super.getResponse().addData(dataset);
 	}
+
 }

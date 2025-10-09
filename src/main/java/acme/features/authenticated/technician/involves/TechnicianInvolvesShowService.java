@@ -3,27 +3,32 @@ package acme.features.authenticated.technician.involves;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.maintenance.Involves;
 import acme.realms.Technician;
 
 @GuiService
-public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technician, Involves> {
+public class TechnicianInvolvesShowService extends AbstractGuiService<Technician, Involves> {
 
 	@Autowired
-	private TechnicianInvolvesRepository repository;
+	TechnicianInvolvesRepository repository;
 
 
 	@Override
 	public void authorise() {
 		boolean status;
 		int id;
+		Technician tech = null;
+
 		Involves involves;
 
 		id = super.getRequest().getData("id", int.class);
 		involves = this.repository.findInvolvesById(id);
-		status = involves != null && super.getRequest().getPrincipal().hasRealm(involves.getMaintenanceRecord().getTechnician());
+		if (involves != null)
+			tech = involves.getMaintenanceRecord().getTechnician();
+		status = involves != null && super.getRequest().getPrincipal().hasRealm(tech);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -37,20 +42,17 @@ public class TechnicianInvolvesDeleteService extends AbstractGuiService<Technici
 		involves = this.repository.findInvolvesById(id);
 
 		super.getBuffer().addData(involves);
+
 	}
 
 	@Override
-	public void bind(final Involves involves) {
-		super.bindObject(involves);
-	}
+	public void unbind(final Involves involves) {
+		Dataset dataset;
 
-	@Override
-	public void validate(final Involves involves) {
-	}
+		dataset = super.unbindObject(involves, "maintenanceRecord", "task");
+		dataset.put("readonly", true);
 
-	@Override
-	public void perform(final Involves involves) {
-		this.repository.delete(involves);
+		super.getResponse().addData(dataset);
 	}
 
 }

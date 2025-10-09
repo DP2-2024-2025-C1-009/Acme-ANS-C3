@@ -3,13 +3,10 @@ package acme.entities.maintenance;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,7 +19,6 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
-import acme.constraints.ValidTicker;
 import acme.entities.aircraft.Aircraft;
 import acme.realms.Technician;
 import lombok.Getter;
@@ -31,20 +27,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "maintenance_record", indexes = {
-	@Index(columnList = "aircraft_id, nextInspectionDueDate"), @Index(columnList = "status"), @Index(columnList = "draftMode")
-})
 public class MaintenanceRecord extends AbstractEntity {
 
 	// Serialisation identifier
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes
-
-	@Mandatory
-	@ValidTicker
-	@Column(unique = true)
-	private String				ticker;
 
 	@Mandatory
 	@ValidMoment(past = true)
@@ -59,10 +47,10 @@ public class MaintenanceRecord extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				nextInspectionDueDate;
+	private Date				inspectionDueDate;
 
 	@Mandatory
-	@ValidMoney()
+	@ValidMoney
 	@Automapped
 	private Money				estimatedCost;
 

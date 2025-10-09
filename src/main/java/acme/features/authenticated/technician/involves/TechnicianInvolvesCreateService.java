@@ -1,7 +1,7 @@
 
 package acme.features.authenticated.technician.involves;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,37 +12,37 @@ import acme.client.services.GuiService;
 import acme.entities.maintenance.Involves;
 import acme.entities.maintenance.MaintenanceRecord;
 import acme.entities.maintenance.Task;
+import acme.features.authenticated.technician.TechnicianTaskRepository;
+import acme.features.authenticated.technician.maintenanceRecord.TechnicianMaintenanceRecordRepository;
 import acme.realms.Technician;
 
 @GuiService
 public class TechnicianInvolvesCreateService extends AbstractGuiService<Technician, Involves> {
 
 	@Autowired
-	private TechnicianInvolvesRepository repository;
+	private TechnicianInvolvesRepository			repository;
+
+	@Autowired
+	private TechnicianMaintenanceRecordRepository	mRRepository;
+
+	@Autowired
+	private TechnicianTaskRepository				taskRepository;
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		String method;
-		int taskId;
-		int maintenanceRecordId;
-		Task task;
-		MaintenanceRecord maintenanceRecord;
 
-		method = super.getRequest().getMethod();
+		boolean status = true;
 
-		if (method.equals("GET"))
-			status = true;
-		else {
-			taskId = super.getRequest().getData("task", int.class);
-			maintenanceRecordId = super.getRequest().getData("maintenanceRecord", int.class);
-			task = this.repository.findTaskById(taskId);
-			maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
-			status = task != null && maintenanceRecord != null ? //
-				maintenanceRecord.isDraftMode() && //
-					super.getRequest().getPrincipal().getActiveRealm().getId() == maintenanceRecord.getTechnician().getId() //
-				: taskId == 0 || maintenanceRecordId == 0;
+		if (super.getRequest().hasData("id") && super.getRequest().getData("task", int.class) != 0) {
+
+			int taskId = super.getRequest().getData("task", int.class);
+			Task task = this.taskRepository.findTaskById(taskId);
+
+			//String techUsername = super.getRequest().getPrincipal().getUsername();
+			//Technician tech = this.taskRepository.findTechnicianByUsername(techUsername);
+			status = task != null && !task.isDraftMode(); // && task.getTechnician().equals(tech);
+
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -50,33 +50,45 @@ public class TechnicianInvolvesCreateService extends AbstractGuiService<Technici
 
 	@Override
 	public void load() {
-		Involves object;
+		Involves involves;
 
-		object = new Involves();
+		involves = new Involves();
+		int maintenanceRecordId = this.getRequest().getData("maintenanceRecordId", int.class);
+		super.getResponse().addGlobal("maintenanceRecordId", maintenanceRecordId);
 
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(involves);
 	}
 
 	@Override
 	public void bind(final Involves involves) {
-		int taskId;
 		int maintenanceRecordId;
-		Task task;
 		MaintenanceRecord maintenanceRecord;
 
-		taskId = super.getRequest().getData("task", int.class);
-		maintenanceRecordId = super.getRequest().getData("maintenanceRecord", int.class);
-		task = this.repository.findTaskById(taskId);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.mRRepository.findMaintenanceRecordById(maintenanceRecordId);
 
-		super.bindObject(involves);
-		involves.setTask(task);
+		super.bindObject(involves, "task");
+
 		involves.setMaintenanceRecord(maintenanceRecord);
 	}
 
 	@Override
 	public void validate(final Involves involves) {
 
+		boolean status = true;
+
+		if (involves.getTask() != null) {
+
+			int taskId = involves.getTask().getId();
+			int mRId = involves.getMaintenanceRecord().getId();
+
+			List<Involves> invs = this.repository.findMRInvolvesByTaskId(taskId, mRId);
+
+			status = invs.isEmpty();
+
+		}
+
+		super.state(status, "task", "acme.validation.involves.alreadyInvolvedTask.message");
 	}
 
 	@Override
@@ -87,25 +99,19 @@ public class TechnicianInvolvesCreateService extends AbstractGuiService<Technici
 	@Override
 	public void unbind(final Involves involves) {
 		Dataset dataset;
-		SelectChoices taskChoices;
-		SelectChoices maintenanceRecordChoices;
-		Collection<Task> tasks;
-		Collection<MaintenanceRecord> maintenanceRecords;
+		SelectChoices choices;
+		List<Task> tasks;
 
-		tasks = this.repository.findAllTasks();
-		taskChoices = SelectChoices.from(tasks, "ticker", involves.getTask());
+		tasks = this.taskRepository.findPublishedTasks();
 
-		maintenanceRecords = this.repository.findAllDraftMaintenanceRecords();
-		maintenanceRecordChoices = SelectChoices.from(maintenanceRecords, "ticker", involves.getMaintenanceRecord());
+		choices = SelectChoices.from(tasks, "description", involves.getTask());
 
-		dataset = super.unbindObject(involves);
+		dataset = super.unbindObject(involves, "task");
+		dataset.put("task", choices.getSelected().getKey());
 
-		dataset.put("task", taskChoices.getSelected().getKey());
-		dataset.put("tasks", taskChoices);
-
-		dataset.put("maintenanceRecord", maintenanceRecordChoices.getSelected().getKey());
-		dataset.put("maintenanceRecords", maintenanceRecordChoices);
+		dataset.put("tasks", choices);
 
 		super.getResponse().addData(dataset);
 	}
+
 }
