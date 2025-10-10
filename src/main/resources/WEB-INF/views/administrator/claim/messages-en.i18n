@@ -1,0 +1,24 @@
+administrator.claim.list.title						= Published claims
+
+administrator.claim.list.label.status				= Status
+administrator.claim.list.label.cIsAccepted			= Published
+administrator.claim.list.label.type					= Type
+administrator.claim.list.label.registrationMoment	= Registration moment
+
+administrator.claim.list.completed					= completed
+
+administrator.claim.form.title						= Claim details	
+
+administrator.claim.form.label.registrationMoment	= Registration moment	
+administrator.claim.form.label.passengerEmail		= Passenger email
+administrator.claim.form.label.description			= Description
+administrator.claim.form.label.cIsAccepted			= Published
+administrator.claim.form.label.type					= Type
+administrator.claim.form.label.status				= Status
+administrator.claim.form.label.leg					= Leg
+administrator.claim.form.label.agent					= Assistance agent
+
+administrator.claim.form.button.trackingLogs			= Tracking logs
+
+acme.value.boolean.true = true
+acme.value.boolean.false = false
