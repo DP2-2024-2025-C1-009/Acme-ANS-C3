@@ -29,6 +29,7 @@ master.menu.administrator.list-aircrafts = List aircrafts
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
+master.menu.administrator.list.claim = List of Published Claims
 
 # master.menu.provider ########################################################
 
@@ -51,6 +52,8 @@ master.menu.user-account.consumer-profile = Consumer profile
 master.menu.user-account.become-manager = Become a manager
 master.menu.user-account.manager-profile = Manager profile
 master.menu.user-account.become-flight-crew-member = Become a crew member
+master.menu.user-account.become-assistance-agent = Become an assistance agent
+master.menu.user-account.assistance-agent-profile = Assistance agent profile
 
 # master.menu.flight-crew-member ####################################################
 

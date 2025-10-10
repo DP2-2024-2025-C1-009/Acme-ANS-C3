@@ -1,0 +1,24 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+authenticated.assistance-agent.form.title = Assistance Agent form
+
+authenticated.assistance-agent.form.label.employeeCode = Employee Code
+authenticated.assistance-agent.form.label.spokenLanguages = Spoken Languages
+authenticated.assistance-agent.form.label.startWorking = Start Working
+authenticated.assistance-agent.form.label.bio = Biography
+authenticated.assistance-agent.form.label.salary = Salary
+authenticated.assistance-agent.form.label.photoLink = Photo Link
+authenticated.assistance-agent.form.label.airline = Airline
+
+acme.validation.employeeCode.format.message = The code must follow the pattern "^[A-Z]{2-3}\d{6}$", where the first two or three letters correspond to their initials
+
+authenticated.assistance-agent.form.button.create = Register
+authenticated.assistance-agent.form.button.update = Update

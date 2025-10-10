@@ -1,0 +1,24 @@
+administrator.claim.list.title						= Reclamaciones publicadas
+
+administrator.claim.list.label.status				= Estado
+administrator.claim.list.label.cIsAccepted			= Publicada
+administrator.claim.list.label.type					= Tipo
+administrator.claim.list.label.registrationMoment	= Momento de registro
+
+administrator.claim.list.completed					= completada
+
+administrator.claim.form.title						= Detalles de la reclamación
+
+administrator.claim.form.label.registrationMoment	= Momento de registro	
+administrator.claim.form.label.passengerEmail		= Email del pasajero
+administrator.claim.form.label.description			= Descripción
+administrator.claim.form.label.cIsAccepted			= Publicada
+administrator.claim.form.label.type					= Tipo
+administrator.claim.form.label.status				= Estado
+administrator.claim.form.label.leg					= Tramo
+administrator.claim.form.label.agent					= Agente de asistencia
+
+administrator.claim.form.button.trackingLogs			= Registros de seguimiento
+
+acme.value.boolean.true = verdadero
+acme.value.boolean.false = falso

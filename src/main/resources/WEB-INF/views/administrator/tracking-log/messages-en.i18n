@@ -1,0 +1,20 @@
+administrator.tracking-log.list.title							= Tracking logs
+
+administrator.tracking-log.list.label.claim						= Claim
+administrator.tracking-log.list.label.resolutionPercentage		= Resolution percentage
+administrator.tracking-log.list.label.status						= Status
+administrator.tracking-log.list.label.isPublished				= Published
+
+
+administrator.tracking-log.form.placeholder.resolutionPercentage	= 50.00
+
+administrator.tracking-log.form.title							= Tracking log details
+
+administrator.tracking-log.form.label.updateMoment			= Last update
+administrator.tracking-log.form.label.creationMoment				= Creation
+administrator.tracking-log.form.label.steps						= Step
+administrator.tracking-log.form.label.resolutionPercentage		= Resolution percentage
+administrator.tracking-log.form.label.resolution					= Resolution
+administrator.tracking-log.form.label.isPublished				= Published
+administrator.tracking-log.form.label.status						= Status
+administrator.tracking-log.form.label.claim						= Claim

@@ -1,0 +1,19 @@
+administrator.tracking-log.list.title							= Registros de seguimiento
+
+administrator.tracking-log.list.label.claim						= Reclamación
+administrator.tracking-log.list.label.resolutionPercentage		= Porcentage de resolución
+administrator.tracking-log.list.label.status						= Estado
+administrator.tracking-log.list.label.isPublished				= Publicado
+
+administrator.tracking-log.form.placeholder.resolutionPercentage	= 50.00
+
+administrator.tracking-log.form.title							= Detalles del registro de seguimiento
+
+administrator.tracking-log.form.label.updateMoment			= Última actualización
+administrator.tracking-log.form.label.creationMoment				= Creación
+administrator.tracking-log.form.label.steps						= Paso
+administrator.tracking-log.form.label.resolutionPercentage		= Porcentaje de resolución
+administrator.tracking-log.form.label.resolution					= Resolución
+administrator.tracking-log.form.label.isPublished				= Publicado
+administrator.tracking-log.form.label.status						= Estado
+administrator.tracking-log.form.label.claim						= Reclamación

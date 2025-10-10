@@ -29,6 +29,7 @@ master.menu.administrator.list-airlines = Ver aerolíneas
 master.menu.administrator.populate-db-initial = Poblar BD (inicial)
 master.menu.administrator.populate-db-sample = Poblar BD (ejemplos)
 master.menu.administrator.shut-system-down = Parar el sistema
+master.menu.administrator.list.claim = Lista de Reclamaciones Publicadas
 
 # master.menu.provider ########################################################
 
@@ -51,6 +52,8 @@ master.menu.user-account.consumer-profile = Perfil de consumidor
 master.menu.user-account.become-manager = Hazte manager
 master.menu.user-account.manager-profile = Perfil de manager
 master.menu.user-account.become-flight-crew-member = Hacerse tripulante
+master.menu.user-account.become-assistance-agent = Hazte agente de asistencia
+master.menu.user-account.assistance-agent-profile = Perfil del agente de asistencia
 
 # master.menu.flight-crew-member ####################################################
 
