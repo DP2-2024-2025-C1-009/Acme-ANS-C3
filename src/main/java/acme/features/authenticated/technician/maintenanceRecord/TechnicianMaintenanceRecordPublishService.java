@@ -120,7 +120,7 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 
 		List<Aircraft> aircrafts = this.repository.findAllAircrafts();
 
-		aircraftChoices = SelectChoices.from(aircrafts, "registrationNumber", maintenanceRecord.getAircraft());
+		aircraftChoices = SelectChoices.from(aircrafts, "numberRegistration", maintenanceRecord.getAircraft());
 
 		maintenanceRecordStatus = SelectChoices.from(Status.class, maintenanceRecord.getStatus());
 
