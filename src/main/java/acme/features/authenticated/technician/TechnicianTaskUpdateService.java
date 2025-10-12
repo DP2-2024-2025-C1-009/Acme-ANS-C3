@@ -18,7 +18,7 @@ public class TechnicianTaskUpdateService extends AbstractGuiService<Technician, 
 	private TechnicianTaskRepository repository;
 
 
-	@Override
+
 	@Override
 	public void authorise() {
 		boolean status;
