@@ -72,6 +72,9 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 			registrationMoment = MomentHelper.getCurrentMoment();
 		legs = this.repository.findAllPublishedLegsBefore(registrationMoment);
 
+		if (legs.isEmpty() && claim.getLeg() != null)
+			legs.add(claim.getLeg());
+
 		typeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		statusChoices = SelectChoices.from(ClaimStatus.class, claim.getStatus());
 		legChoices = SelectChoices.from(legs, "flightNumber", claim.getLeg());

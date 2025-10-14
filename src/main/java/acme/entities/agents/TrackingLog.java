@@ -4,7 +4,9 @@ package acme.entities.agents;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -25,9 +27,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @ValidTrackingLog
-//@Table(indexes = {
-//	@Index(columnList = "tracking_steps_id, id"), @Index(columnList = "tracking_steps_id, creationMoment"), @Index(columnList = "tracking_steps_id, status")
-//})
+@Table(indexes = {
+	@Index(columnList = "tracking_steps_id, id"), @Index(columnList = "tracking_steps_id, creationMoment"), @Index(columnList = "tracking_steps_id, status")
+})
 public class TrackingLog extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
